@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200605174312 extends AbstractMigration
+final class Version20200605200800 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,6 +22,13 @@ final class Version20200605174312 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
+        $this->addSql('CREATE SEQUENCE items_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE posts_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE files_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE sections_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE words_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE item_word_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE instructions_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE TABLE items (id INT NOT NULL, name TEXT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE posts (id INT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE files (id INT NOT NULL, id_post INT DEFAULT NULL, filename VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
@@ -54,6 +61,13 @@ final class Version20200605174312 extends AbstractMigration
         $this->addSql('ALTER TABLE instructions DROP CONSTRAINT FK_997D812BD1AA708F');
         $this->addSql('ALTER TABLE instructions DROP CONSTRAINT FK_997D812BF3EED39F');
         $this->addSql('ALTER TABLE item_word DROP CONSTRAINT FK_BC131EA48D16913');
+        $this->addSql('DROP SEQUENCE items_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE posts_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE files_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE sections_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE words_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE item_word_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE instructions_id_seq CASCADE');
         $this->addSql('DROP TABLE items');
         $this->addSql('DROP TABLE posts');
         $this->addSql('DROP TABLE files');
