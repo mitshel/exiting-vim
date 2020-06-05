@@ -1,11 +1,4 @@
 <?php
-/**
- * @data 05.06.2020
- * @package Портал ТФОМС
- * @subpackage Модуль - ОТчеты
- * @author <yurinskiy@krasmed.ru>
- */
-
 namespace Core\Entity;
 
 use Core\Traits\EntityDatableTrait;
@@ -19,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks
  */
-
 class User implements UserInterface
 {
     use EntityDatableTrait;
