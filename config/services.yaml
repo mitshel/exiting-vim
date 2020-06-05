@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    encode.algorithm: sha512
+    encode.use_base64: true
+    encode.iterations: 10
 
 services:
     # default configuration for services in *this* file
@@ -25,3 +28,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Исправление ошибки удаления схемы public при создании миграции
+    Core\Doctrine\MigrationEventSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    # Хеширование пароля при сохранении сущности
+    Core\Security\HashPasswordListener:
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
