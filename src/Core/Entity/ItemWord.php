@@ -1,18 +1,26 @@
 <?php
+
 namespace Core\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="items")
+ * @ORM\Table(name="item_word")
  */
-class Trash
+class ItemWord
 {
     /**
      * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
      */
     private int $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Word")
+     * @ORM\JoinColumn(name="id_word", referencedColumnName="id")
+     */
+    private Word $word;
 
     /**
      * @ORM\ManyToOne(targetEntity="Item")
@@ -21,10 +29,9 @@ class Trash
     private Item $item;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Section")
-     * @ORM\JoinColumn(name="id_section", referencedColumnName="id")
+     * @ORM\Column(name="cnt", type="integer")
      */
-    private Section $section;
+    private int $cnt = 1;
 
     public function getId(): ?int
     {
@@ -34,6 +41,18 @@ class Trash
     public function setId(int $id): self
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getWord(): Word
+    {
+        return $this->word;
+    }
+
+    public function setWord(Word $word): self
+    {
+        $this->word = $word;
 
         return $this;
     }
@@ -50,17 +69,14 @@ class Trash
         return $this;
     }
 
-    public function getSection(): Section
+    public function getCnt(): int
     {
-        return $this->section;
+        return $this->cnt;
     }
 
-    public function setSection(Section $section): self
+    public function setCnt(int $cnt): self
     {
-        $this->section = $section;
-
+        $this->cnt = $cnt;
         return $this;
     }
-
-
 }

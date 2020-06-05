@@ -12,6 +12,7 @@ class Section
 {
     /**
      * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
      */
     private int $id;
 
