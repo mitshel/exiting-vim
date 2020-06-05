@@ -6219,7 +6219,7 @@ a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-prima
 }
 
 .bg-secondary {
-    background-color: #2c3e50 !important
+    background-color: #fff !important
 }
 
 a.bg-secondary:focus, a.bg-secondary:hover, button.bg-secondary:focus, button.bg-secondary:hover {
@@ -9811,11 +9811,12 @@ a.text-dark:focus, a.text-dark:hover {
     padding-top: 1rem;
     padding-bottom: 1rem;
     font-family: SB Heading, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-    font-weight: 700
+    font-weight: 700;
+    border-bottom: 1px solid #e0e7ea;
 }
 
 #mainNav .navbar-brand {
-    color: #fff
+    color: #4e5f68
 }
 
 #mainNav .navbar-nav {
@@ -9823,19 +9824,19 @@ a.text-dark:focus, a.text-dark:hover {
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link {
-    color: #fff
+    color: #4e5f68
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link:hover {
-    color: #1abc9c
+    color: #2286f7
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
-    color: #fff
+    color: #4e5f68
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link.active {
-    color: #1abc9c
+    color: #2286f7
 }
 
 #mainNav .navbar-toggler {
