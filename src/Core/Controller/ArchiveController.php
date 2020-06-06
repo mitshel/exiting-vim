@@ -2,7 +2,10 @@
 
 namespace Core\Controller;
 
+use Core\Entity\Instruction;
+use Core\Entity\InstructionContent;
 use Core\Entity\Post;
+use Core\Entity\Section;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,7 +20,7 @@ class ArchiveController extends AbstractController
     public function base()
     {
         $map = [
-            'a' => 'A',
+            'a' => 'А',
             'b' => 'Б',
             'v' => 'В',
             'g' => 'Г',
@@ -57,6 +60,7 @@ class ArchiveController extends AbstractController
                 'childs' => [],
             ];
         }
+        dump($posts);
 
         /** @var Post $post */
         foreach ($posts as $post) {
@@ -72,7 +76,74 @@ class ArchiveController extends AbstractController
         }
 
         return $this->render('archive/index.html.twig', [
-            'data' => $data
+            'data' => $data,
         ]);
+    }
+
+
+    /**
+     * @Route("/{id}", name="spec")
+     */
+    public function indexSpec($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $post = $em->getRepository(Post::class)->find($id);
+
+        $instruction = $this->getDoctrine()->getRepository(Instruction::class)->findOneBy(['post' => $post]);
+
+        $mainSection = $em->getRepository(Section::class)->find(1);
+        $obyazSection = $em->getRepository(Section::class)->find(2);
+        $pravaSection = $em->getRepository(Section::class)->find(3);
+        $otvetSection = $em->getRepository(Section::class)->find(4);
+
+        $data = [];
+
+        $data['post'] = $post;
+
+        $inst = $em->getRepository(InstructionContent::class)->findBy([
+            'instruction' => $instruction,
+            'section' => $mainSection,
+        ], ['id' => 'asc']);
+
+        $data['main'] = [];
+        /** @var InstructionContent $item */
+        foreach ($inst as $item) {
+            $data['main'][] = $item->getItem()->getName();
+        }
+
+        $inst = $em->getRepository(InstructionContent::class)->findBy([
+            'instruction' => $instruction,
+            'section' => $obyazSection,
+        ], ['id' => 'asc']);
+
+        $data['obyaz'] = [];
+        /** @var InstructionContent $item */
+        foreach ($inst as $item) {
+            $data['obyaz'][] = $item->getItem()->getName();
+        }
+
+        $inst = $em->getRepository(InstructionContent::class)->findBy([
+            'instruction' => $instruction,
+            'section' => $pravaSection,
+        ], ['id' => 'asc']);
+
+        $data['prava'] = [];
+        /** @var InstructionContent $item */
+        foreach ($inst as $item) {
+            $data['prava'][] = $item->getItem()->getName();
+        }
+
+        $inst = $em->getRepository(InstructionContent::class)->findBy([
+            'instruction' => $instruction,
+            'section' => $otvetSection,
+        ], ['id' => 'asc']);
+
+        $data['otvet'] = [];
+        /** @var InstructionContent $item */
+        foreach ($inst as $item) {
+            $data['otvet'][] = $item->getItem()->getName();
+        }
+
+        return $this->render('spec.html.twig', $data);
     }
 }

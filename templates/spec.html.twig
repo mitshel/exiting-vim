@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/heading.css') }}">
     <link rel="stylesheet" href="{{ asset('css/body.css') }}">
 {% endblock %}
-{% block title %}Hello IndexController!{% endblock %}
+{% block title %}{{ post.name }}{% endblock %}
 
 {% block body %}
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
@@ -31,7 +31,7 @@
                                                          href="#liability">ОТВЕТСТВЕННОСТЬ</a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                                                         href="#addition">ДОПОЛНИТЕЛЬНЫЯ ИНФОРМАЦИЯ</a>
+                                                         href="{{ path('archive_index')}}">{% apply upper %}База полных инструкций{% endapply %}</a>
                     </li>
                 </ul>
             </div>
@@ -39,13 +39,13 @@
     </nav>
     <header class="masthead bg-primary text-white text-center background" style="background-image: url({{ asset('img/rosback8.jpg') }})">
         <div class="container d-flex align-items-center flex-column backtext">
-            <h1 class="masthead-heading mb-0">ИНЖЕНЕР-ПРОГРАММИСТ</h1>
+            <h1 class="masthead-heading mb-0">{{ post.name }}</h1>
             <!-- Icon Divider-->
             {#<div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
             </div>#}
             <!-- Masthead Subheading-->
-            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Отдел разработки и внедрения информационных систем</p>
+{#            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Отдел разработки и внедрения информационных систем</p>#}
         </div>
     </header>
 
@@ -55,11 +55,9 @@
                 <!-- Portfolio Items-->
                 <div class="col-md-12 col-lg-12 mb-12 professional-description">
                     <h2 class="text-secondary mb-0  text-center">Должностные обязанности<hr></h2>
-                    <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
-                    <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
-                    <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
-                    <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
-                    <p>Определяет возможность использования готовых программных продуктов.</p>
+                    {% for t in obyaz %}
+                        <p>{{ t }}</p>
+                    {% endfor %}
                 </div>
                 {#<div class="col-md-4 col-lg-4 mb-4 d-flex align-items-center">
                     <div><img src="{{ asset('img/professional.jpg') }}" class="work-process"></div>
@@ -74,11 +72,9 @@
 
                 <div class="col-md-12 col-lg-12 mb-12 professional-description">
                     <h2 class="text-secondary mb-0 text-center">Права<hr></h2>
-                    <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
-                    <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
-                    <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
-                    <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
-                    <p>Определяет возможность использования готовых программных продуктов.</p>
+                    {% for t in prava %}
+                        <p>{{ t }}</p>
+                    {% endfor %}
                 </div>
                 {#<div class="col-md-4 col-lg-4 mb-4 d-flex align-items-center">
                     <img src="{{ asset('img/prava.jpg') }}" class="work-process">
@@ -92,70 +88,15 @@
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-12 mb-12 professional-description">
                     <h2 class="text-secondary mb-0 text-center">Ответственность<hr></h2>
-                    <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
-                    <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
-                    <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
-                    <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
-                    <p>Определяет возможность использования готовых программных продуктов.</p>
+                    {% for t in otvet %}
+                        <p>{{ t }}</p>
+                    {% endfor %}
                 </div>
                 {#<div class="col-md-4 col-lg-4 mb-4 d-flex align-items-center">
                     <img src="{{ asset('img/law.jpg') }}" class="work-process">
                 </div>#}
             </div>
         </div>
-    </section>
-
-    <section class="page-section" id="addition">
-        <div class="container">
-                <div class="portfolio-modal modal fade" id="modalAdditianalItem1" tabindex="-1" role="dialog" aria-labelledby="#modalAdditianalItem1Label" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
-                            <div class="modal-body text-center">
-                                <div class="container">
-                                    <div class="row justify-content-center">
-                                        <div class="col-12">
-                                            <!-- Portfolio Modal - Title-->
-                                            <h2 class="portfolio-modal-title text-secondary mb-0">Товаровед</h2>
-                                            <!-- Icon Divider-->
-                                            <div class="divider-custom">
-                                                <div class="divider-custom-line"></div>
-                                            </div>
-
-                                            <h3 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Должностные обязанности<hr></h3>
-                                            <div class="" style="text-align: left; font-size: 1.2rem">
-                                                <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
-                                                <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
-                                                <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
-                                                <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
-                                                <p>Определяет возможность использования готовых программных продуктов.</p>
-                                            </div>
-
-                                            <h3 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Права<hr></h3>
-                                            <div class="" style="text-align: left; font-size: 1.2rem">
-                                                <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
-                                                <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
-                                                <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
-                                                <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
-                                                <p>Определяет возможность использования готовых программных продуктов.</p>
-                                            </div>
-
-                                            <h3 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Ответственность<hr></h3>
-                                            <div class="" style="text-align: left; font-size: 1.2rem">
-                                                <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
-                                                <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
-                                                <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
-                                                <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
-                                                <p>Определяет возможность использования готовых программных продуктов.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
     </section>
 {% endblock %}
 {% block subjavascripts %}

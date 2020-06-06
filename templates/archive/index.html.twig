@@ -201,7 +201,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 p-0 factoriesListItem">
                         {% for child in item.childs %}
-                            <div class="factoriesItem">
+                            <div class="factoriesItem" onclick="document.location.href = '{{ path('archive_spec', {'id': child.id}) }}'">
                                 <h3>{{ child.name }}</h3>
                             </div>
                         {% endfor %}
