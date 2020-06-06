@@ -21,7 +21,7 @@ class ParticiplesRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('w')
             ->select('w')
-            ->where('w.word like lower(:search)')
+            ->where('lower(w.word) like lower(:search)')
             ->setParameter('search', $word . '%')
             ->setMaxResults(1);
 

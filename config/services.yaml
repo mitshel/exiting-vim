@@ -44,3 +44,9 @@ services:
         tags:
             - { name: 'console.command' }
 
+    Core\Command\NewTextCommand:
+        arguments: [ '@doctrine.orm.entity_manager']
+        tags:
+          - { name: 'console.command' }
+
+
