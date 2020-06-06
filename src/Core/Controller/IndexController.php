@@ -102,7 +102,7 @@ class IndexController extends AbstractController
     public function index(Request $request)
     {
         /** @var NewText1 $doljnost */
-        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(5);
+        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(237);
         $dolPol = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
             'instruction' => $doljnost->getIntstr(),
             'section' => $doljnost->getSection()
