@@ -6,6 +6,7 @@ namespace Core\Controller;
 
 use Core\Entity\File;
 use Core\Entity\Instruction;
+use Core\Entity\InstructionContent;
 use Core\Entity\Item;
 use Core\Entity\NewText1;
 use Core\Entity\Post;
@@ -24,14 +25,18 @@ class IndexController extends AbstractController
     {
         /** @var NewText1 $doljnost */
         $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(5);
-        $dolPol = $this->getDoctrine()->getRepository(Instruction::class)->findArr($doljnost->getIntstr(), $doljnost->getSection());
-        $arr = array_column($dolPol, 'name');
+        $dolPol = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
+            'instruction' => $doljnost->getIntstr(),
+            'section' => $doljnost->getSection()
+        ]);
 
-        $str = implode(' ', $arr);
+//        $arr = array_column($dolPol, 'name');
+//
+//        $str = implode(' ', $arr);
 
         return $this->render('index.html.twig', [
             'doljnost' => $doljnost->getText(),
-            'dolPol' => $str
+            'dolPol' => $dolPol
         ]);
     }
 
