@@ -9740,7 +9740,7 @@ a.text-dark:focus, a.text-dark:hover {
 }
 
 .page-section {
-    padding: 2rem 0
+    padding-top: 2rem;
 }
 
 .page-section .page-section-heading {
@@ -9974,7 +9974,7 @@ a.text-dark:focus, a.text-dark:hover {
     top: 1rem;
     font-size: 3rem;
     line-height: 3rem;
-    color: #1abc9c;
+    color: #2c3e50;
     opacity: 1
 }
 
@@ -10084,4 +10084,10 @@ form .row:first-child .floating-label-form-group {
 
 .background{
     background-size: cover;
+}
+.moreButton{
+    color: #1c5dbe;
+    border: 1px solid #1c5dbe;
+    padding: 10px;
+    cursor: pointer;
 }
