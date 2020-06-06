@@ -12,6 +12,8 @@ use Core\Entity\NewText1;
 use Core\Entity\Post;
 use Core\Entity\Section;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,8 +22,10 @@ class IndexController extends AbstractController
     /**
      * @Route("/", name="home")
      * @Route("/api/", name="api")
+     * @param Request $request
+     * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         /** @var NewText1 $doljnost */
         $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(5);
@@ -30,9 +34,18 @@ class IndexController extends AbstractController
             'section' => $doljnost->getSection()
         ]);
 
-//        $arr = array_column($dolPol, 'name');
-//
-//        $str = implode(' ', $arr);
+        if ($request->getRequestUri() == '/api/') {
+            $res = [];
+            /** @var InstructionContent $item */
+            foreach ($dolPol as $item) {
+                array_push($res, $item->getItem()->getName());
+            }
+            return new JsonResponse([
+                'Должностная инструкция' => $doljnost,
+                'Должностная инструкция расширенная' => $res,
+            ]);
+        }
+
 
         return $this->render('index.html.twig', [
             'doljnost' => $doljnost->getText(),
