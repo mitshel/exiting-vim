@@ -44,7 +44,7 @@ class SchetCommand extends Command
         foreach ($items as $item) {
             $name = str_replace('—', ' ', $item->getName());
             $name = preg_replace ('/^[0-9:;.\-\'\"]+|[.,:;()\-_;\'\"\t\s]+/i', ' ', $name);
-            $name = trim(mb_strtolower($name));
+            $name = trim(mb_strtoupper($name));
 
             foreach (explode( ' ', $name) as $w) {
 
@@ -53,22 +53,27 @@ class SchetCommand extends Command
                 }
 
                 /** @var Words $word */
-                $word = $this->em->getRepository(Words::class)->findOneBy(['word' => $w]);
+                $word = $this->em->getRepository(Words::class)->wordOne($w);
 
                 while ($word instanceof Words && $word->getWCase() !== 'им' && $word->getWCase() !== null) {
                     $word = $this->em->getRepository(Words::class)->findOneBy(['code' => $word->getCodeParent()]);
                 }
 
-                if (!$word instanceof Words) {
-                    $output->writeLn('Не найдено: ' . $w);
-                    continue;
+                if ($word instanceof Words) {
+                    $wordItem = $this->em->getRepository(ItemWord::class)->findOneBy(['word' => $word, 'item' => $item]) ?? new ItemWord();
+                    $wordItem->setWord($word);
+                    $wordItem->setValue($w);
+                    $cnt = $wordItem->getCnt();
+                    $wordItem->setCnt(++$cnt);
+                    $wordItem->setItem($item);
+                } else {
+                    $wordItem = $this->em->getRepository(ItemWord::class)->findOneBy(['value' => $w, 'item' => $item]) ?? new ItemWord();
+                    $wordItem->setWord(null);
+                    $wordItem->setValue($w);
+                    $cnt = $wordItem->getCnt();
+                    $wordItem->setCnt(++$cnt);
+                    $wordItem->setItem($item);
                 }
-
-                $wordItem = $this->em->getRepository(ItemWord::class)->findOneBy(['word' => $word, 'item' => $item]) ?? new ItemWord();
-                $wordItem->setWord($word);
-                $cnt = $wordItem->getCnt();
-                $wordItem->setCnt(++$cnt);
-                $wordItem->setItem($item);
 
                 $this->em->persist($wordItem);
                 $this->em->flush();

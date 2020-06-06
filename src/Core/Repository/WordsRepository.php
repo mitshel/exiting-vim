@@ -23,4 +23,15 @@ class WordsRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    public function wordOne($word)
+    {
+        $query = $this->createQueryBuilder('w')
+            ->select('w')
+            ->where('upper(w.word) = upper(:search)')
+            ->setParameter('search', $word);
+
+        $result = $query->getQuery()->getResult();
+
+        return count($result) > 0 ? $result[0] : null;
+    }
 }

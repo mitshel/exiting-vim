@@ -21,13 +21,18 @@ class ItemWord
      * @ORM\ManyToOne(targetEntity="Core\Entity\Words",cascade={"persist"})
      * @ORM\JoinColumn(name="id_word", referencedColumnName="iid")
      */
-    private Words $word;
+    private ?Words $word;
 
     /**
      * @ORM\ManyToOne(targetEntity="Item",cascade={"persist"})
      * @ORM\JoinColumn(name="id_item", referencedColumnName="id")
      */
     private Item $item;
+
+    /**
+     * @ORM\Column(name="val", type="string")
+     */
+    private string $value;
 
     /**
      * @ORM\Column(name="cnt", type="integer")
@@ -46,12 +51,12 @@ class ItemWord
         return $this;
     }
 
-    public function getWord(): Words
+    public function getWord(): ?Words
     {
         return $this->word;
     }
 
-    public function setWord(Words $word): self
+    public function setWord(?Words $word): self
     {
         $this->word = $word;
 
@@ -78,6 +83,16 @@ class ItemWord
     public function setCnt(int $cnt): self
     {
         $this->cnt = $cnt;
+        return $this;
+    }
+
+    public function getValue(): string {
+        return $this->value;
+    }
+
+    public function setValue(string $value): self
+    {
+        $this->value = $value;
         return $this;
     }
 }
