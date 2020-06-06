@@ -6480,6 +6480,9 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
     .d-sm-inline-flex {
         display: inline-flex !important
     }
+    .backtext{
+        color: #fff;
+    }
 }
 
 @media (min-width: 768px) {
@@ -6517,6 +6520,10 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 
     .d-md-inline-flex {
         display: inline-flex !important
+    }
+    .backtext{
+        color:#273f6a;
+        /*#273f6a*/
     }
 }
 
@@ -6556,6 +6563,10 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
     .d-lg-inline-flex {
         display: inline-flex !important
     }
+    .backtext{
+        color: #273f6a;
+        /*#273f6a*/
+    }
 }
 
 @media (min-width: 1200px) {
@@ -6593,6 +6604,10 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 
     .d-xl-inline-flex {
         display: inline-flex !important
+    }
+    .backtext{
+        color: #273f6a;
+        /*#273f6a*/
     }
 }
 
@@ -9725,7 +9740,7 @@ a.text-dark:focus, a.text-dark:hover {
 }
 
 .page-section {
-    padding: 6rem 0
+    padding: 2rem 0
 }
 
 .page-section .page-section-heading {
@@ -9735,7 +9750,7 @@ a.text-dark:focus, a.text-dark:hover {
 
 @media (min-width: 992px) {
     .page-section .page-section-heading {
-        font-size: 3rem;
+        font-size: 2rem;
         line-height: 2.5rem
     }
 }
@@ -9828,7 +9843,7 @@ a.text-dark:focus, a.text-dark:hover {
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link:hover {
-    color: #2286f7
+    color: #135d82
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
@@ -9836,7 +9851,7 @@ a.text-dark:focus, a.text-dark:hover {
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link.active {
-    color: #2286f7
+    color: #135d82
 }
 
 #mainNav .navbar-toggler {
@@ -9861,8 +9876,10 @@ a.text-dark:focus, a.text-dark:hover {
     }
 
     #mainNav .navbar-nav > li.nav-item > a.nav-link.active, #mainNav .navbar-nav > li.nav-item > a.nav-link.active:active, #mainNav .navbar-nav > li.nav-item > a.nav-link.active:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link.active:hover {
-        color: #fff;
-        background: #1abc9c
+        color: #135d82;
+        background: #fff;
+        border: 1px solid #135d82;
+        border-radius: 0px !important;
     }
 
     #mainNav.navbar-shrink {
@@ -9872,6 +9889,9 @@ a.text-dark:focus, a.text-dark:hover {
 
     #mainNav.navbar-shrink .navbar-brand {
         font-size: 1.5em
+    }
+    .professional-description p{
+        font-size: 1.2rem;
     }
 }
 
@@ -10056,4 +10076,12 @@ form .row:first-child .floating-label-form-group {
 
 .btn-social {
     margin-bottom: .5rem
+}
+.work-process{
+    width: 100%;
+    margin: 5em auto;
+}
+
+.background{
+    background-size: cover;
 }

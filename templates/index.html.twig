@@ -18,12 +18,18 @@
             <img alt="Brand" src="{{ asset('img/logo.png') }}" height="45px"> Quick Dive</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                     type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Меню <i
                         class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                                                         href="#im">МОЯ РОЛЬ В КОМАНДЕ</a>
+                                                         href="#im">ОБЯЗАННОСТИ</a>
+
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                                                         href="#law">ПРАВА</a>
+
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                                                         href="#liability">ОТВЕТСТВЕННОСТЬ</a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                                                          href="#docs">СОПУТСТВУЮЩИЕ ДОКУМЕНТЫ</a>
@@ -32,17 +38,74 @@
             </div>
         </div>
     </nav>
-    <header class="masthead bg-primary text-white text-center">
-        <div class="container d-flex align-items-center flex-column">
+    <header class="masthead bg-primary text-white text-center background" style="background-image: url({{ asset('img/rosback8.jpg') }})">
+        <div class="container d-flex align-items-center flex-column backtext">
             <h1 class="masthead-heading mb-0">ИНЖЕНЕР-ПРОГРАММИСТ</h1>
             <!-- Icon Divider-->
-            <div class="divider-custom divider-light">
+            {#<div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
-            </div>
+            </div>#}
             <!-- Masthead Subheading-->
             <p class="pre-wrap masthead-subheading font-weight-light mb-0">Отдел разработки и внедрения информационных систем</p>
         </div>
     </header>
+
+    <section class="page-section" id="im">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Portfolio Items-->
+                <div class="col-md-6 col-lg-6 mb-6 professional-description">
+                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Должностные обязанности<hr></h2>
+                    <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
+                    <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
+                    <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
+                    <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
+                    <p>Определяет возможность использования готовых программных продуктов.</p>
+                </div>
+                <div class="col-md-6 col-lg-6 mb-6">
+                    <img src="{{ asset('img/professional.jpg') }}" class="work-process">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="law">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-6 mb-6">
+                    <img src="{{ asset('img/prava.jpg') }}" class="work-process">
+                </div>
+                <div class="col-md-6 col-lg-6 mb-6 professional-description">
+                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Права<hr></h2>
+                    <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
+                    <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
+                    <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
+                    <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
+                    <p>Определяет возможность использования готовых программных продуктов.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="liability">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <div class="col-md-6 col-lg-6 mb-6 professional-description">
+                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Ответственность<hr></h2>
+                    <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
+                    <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
+                    <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
+                    <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
+                    <p>Определяет возможность использования готовых программных продуктов.</p>
+                </div>
+                <div class="col-md-6 col-lg-6 mb-6">
+                    <img src="{{ asset('img/law.jpg') }}" class="work-process">
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock %}
 {% block subjavascripts %}
     {{ parent() }}
