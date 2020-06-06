@@ -7,7 +7,9 @@ namespace Core\Controller;
 use Core\Entity\AdjectivesMorf;
 use Core\Entity\File;
 use Core\Entity\Instruction;
+use Core\Entity\InstructionContent;
 use Core\Entity\Item;
+use Core\Entity\NewText1;
 use Core\Entity\NounsMorf;
 use Core\Entity\Post;
 use Core\Entity\Section;
@@ -97,11 +99,24 @@ class IndexController extends AbstractController
 
     /**
      * @Route("/", name="home")
+     * @Route("/api/", name="api")
      */
     public function index()
     {
+        /** @var NewText1 $doljnost */
+        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(5);
+        $dolPol = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
+            'instruction' => $doljnost->getIntstr(),
+            'section' => $doljnost->getSection()
+        ]);
+
+//        $arr = array_column($dolPol, 'name');
+//
+//        $str = implode(' ', $arr);
+
         return $this->render('index.html.twig', [
-            'controller_name' => 'IndexController',
+            'doljnost' => $doljnost->getText(),
+            'dolPol' => $dolPol,
             'boss' => $this->getBoss(),
         ]);
     }
@@ -215,11 +230,12 @@ class IndexController extends AbstractController
         return new Response('OK');
     }
 
-    public function fill($em, $post, $section, $subject) {
+    public function fill($em, $post, $section, $subject)
+    {
         echo '<pre>';
         echo $section->getName() . PHP_EOL;
 
-        foreach(preg_split("/((\r?\n)|(\r\n?))/", $subject) as $line){
+        foreach (preg_split("/((\r?\n)|(\r\n?))/", $subject) as $line) {
             $line = trim($line);
             if (empty($line)) {
                 continue;
