@@ -6,12 +6,10 @@ namespace Core\Controller;
 
 use Core\Entity\File;
 use Core\Entity\Instruction;
-use Core\Entity\InstructionContent;
 use Core\Entity\Item;
-use Core\Entity\Participles;
+use Core\Entity\NewText1;
 use Core\Entity\Post;
 use Core\Entity\Section;
-use Core\Entity\Verbs;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,13 +18,20 @@ class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="home")
+     * @Route("/api/", name="api")
      */
     public function index()
     {
+        /** @var NewText1 $doljnost */
+        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(5);
+        $dolPol = $this->getDoctrine()->getRepository(Instruction::class)->findArr($doljnost->getIntstr(), $doljnost->getSection());
+        $arr = array_column($dolPol, 'name');
 
+        $str = implode(' ', $arr);
 
         return $this->render('index.html.twig', [
-//            'doljnost' => $strDoljnost,
+            'doljnost' => $doljnost->getText(),
+            'dolPol' => $str
         ]);
     }
 
