@@ -4,24 +4,133 @@ declare(strict_types=1);
 
 namespace Core\Controller;
 
+use Core\Entity\AdjectivesMorf;
 use Core\Entity\File;
 use Core\Entity\Instruction;
+use Core\Entity\InstructionContent;
 use Core\Entity\Item;
+use Core\Entity\NewText1;
+use Core\Entity\NounsMorf;
 use Core\Entity\Post;
 use Core\Entity\Section;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @param null $id
+     * @return mixed|null
      */
-    public function index()
+    public function getBoss($id = null)
     {
+        $subject = ' 4.6. Методы экономического анализа хозяйственно-финансовой деятельности предприятия.
+4.7.		
+
+ 4.8. Правила эксплуатации вычислительной техники.
+ 4.9. Основы экономики, организации труда и управления.
+ 4.10. Рыночные методы хозяйствования.
+ 4.11. Законодательство о труде.
+ 4.12. Правила внутреннего трудового распорядка.
+ 4.13. Правила и нормы охраны труда.
+ 4.14. 		
+
+ 5. Бухгалтер в своей работе руководствуется:
+ 5.1. Положением о бухгалтерии организации.
+ 5.2. Настоящей должностной инструкцией.
+5.3		
+
+ 6. Бухгалтер подчиняется непосредственно главному бухгалтеру организации или руководителю соответствующего структурного подразделения главной бухгалтерии.
+ 7. На время отсутствия бухгалтера (отпуск, болезнь, пр.) его обязанности исполняет лицо, назначенное в установленном порядке, которое 
+ приобретает соответствующие права и несет ответственность за качество и своевременность выполнения возложенных на него обязанностей.
+8.		
+';
+        $subject = preg_replace('|\s+|', ' ', str_replace("\n", " ", $subject));
+        $subject = str_replace(['(', ')', ';'], '', $subject);
+
+        $res = explode(' ', $subject);
+        $start = null;
+        $finish = null;
+        foreach ($res as $k => $item) {
+            if (mb_strtolower($item) == mb_strtolower('подчиняется')) {
+                $start = $k;
+            }
+
+            if ($start && $k > $start) {
+                if (stristr($item, '.') !== FALSE) {
+                    $finish = $k;
+                    break;
+                }
+            }
+        }
+
+        if ($finish) {
+            $finish = count($res);
+        }
+
+        $pril = null;
+        $sush = null;
+        $nach = [];
+        $ii = 0;
+        for ($i = $start; $i < $finish; $i++) {
+            if (in_array(mb_strtolower($res[$i]), ['и', 'или'])) {
+                $ii++;
+                continue;
+            }
+
+            $pril = $this->getDoctrine()->getRepository(AdjectivesMorf::class)->findOneBy(['word' => $res[$i], 'wcase' => 'дат']);
+
+            if (!$pril) {
+                $sush = $this->getDoctrine()->getRepository(NounsMorf::class)->findOneBy(['word' => $res[$i], 'wcase' => 'дат']);
+            }
+
+            if ($pril || $sush) {
+                if (!isset($nach[$ii])) {
+                    $nach[$ii] = '';
+                }
+                $nach[$ii] .= " " . $res[$i];
+            }
+
+        }
+
+        return $nach[0] ?? null;
+    }
+
+    /**
+     * @Route("/", name="home")
+     * @Route("/api/", name="api")
+     * @param Request $request
+     * @return Response
+     */
+    public function index(Request $request)
+    {
+        /** @var NewText1 $doljnost */
+        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(5);
+        $dolPol = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
+            'instruction' => $doljnost->getIntstr(),
+            'section' => $doljnost->getSection()
+        ]);
+
+        if ($request->getRequestUri() == '/api/') {
+            $res = [];
+            /** @var InstructionContent $item */
+            foreach ($dolPol as $item) {
+                array_push($res, $item->getItem()->getName());
+            }
+            return new JsonResponse([
+                'Должностная инструкция' => $doljnost,
+                'Должностная инструкция расширенная' => $res,
+            ]);
+        }
+
+
         return $this->render('index.html.twig', [
-            'controller_name' => 'IndexController',
+            'doljnost' => $doljnost->getText(),
+            'dolPol' => $dolPol,
+            'boss' => $this->getBoss(),
         ]);
     }
 
@@ -134,11 +243,12 @@ class IndexController extends AbstractController
         return new Response('OK');
     }
 
-    public function fill($em, $post, $section, $subject) {
+    public function fill($em, $post, $section, $subject)
+    {
         echo '<pre>';
         echo $section->getName() . PHP_EOL;
 
-        foreach(preg_split("/((\r?\n)|(\r\n?))/", $subject) as $line){
+        foreach (preg_split("/((\r?\n)|(\r\n?))/", $subject) as $line) {
             $line = trim($line);
             if (empty($line)) {
                 continue;

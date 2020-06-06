@@ -21,18 +21,17 @@ class SlovaController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-
         $items = $this->getDoctrine()->getRepository(InstructionContent::class)->findArr(1, 2);
 
         $arr = array_column($items, 'name');
 
         $str = implode(' ', $arr);
         //dump('$str='.$str);
+
         $str = $this->regex($str);
 
 
         $keywords = preg_split("/[\s,]+/", $str);
-        //dump($keywords);
         $i = 0;
         while ($i < count($keywords)) {
             if (mb_strlen($keywords[$i]) > 2) {
@@ -121,7 +120,7 @@ class SlovaController extends AbstractController
         $str = preg_replace('/,\s{0,},/u', ',', $str);
 
         if ($str[0] == '.') {
-            $str = mb_substr($str, 1);
+            $str = iconv_substr($str, 1);
 
         }
 

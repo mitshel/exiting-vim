@@ -40,14 +40,21 @@
     <header class="masthead bg-primary text-white text-center background" style="background-image: url({{ asset('img/rosback8.jpg') }})">
         <div class="container d-flex align-items-center flex-column backtext">
             <h1 class="masthead-heading mb-0">ИНЖЕНЕР-ПРОГРАММИСТ</h1>
-            <!-- Icon Divider-->
-            {#<div class="divider-custom divider-light">
-                <div class="divider-custom-line"></div>
-            </div>#}
-            <!-- Masthead Subheading-->
+
             <p class="pre-wrap masthead-subheading font-weight-light mb-0">Отдел разработки и внедрения информационных систем</p>
         </div>
     </header>
+    {% if boss is defined %}
+        <section class="page-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-12 col-lg-12 mb-12">
+                        <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Подчиняется {{ boss }}</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
 
     <section class="page-section" id="im">
         <div class="container">
@@ -55,14 +62,8 @@
                 <!-- Portfolio Items-->
                 <div class="col-md-8 col-lg-8 mb-8 professional-description">
                     <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Должностные обязанности<hr></h2>
-                    <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
-                    <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
-                    <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
-                    <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
-                    <p>Определяет возможность использования готовых программных продуктов.</p>
-                    <div>
-                        <span data-toggle="modal" data-target="#modalDesctiptionIm" class="moreButton">Подробнее</span>
-                    </div>
+                    <p>{{ doljnost }}</p>
+                    <p><span data-toggle="modal" data-target="#modalDesctiptionIm" class="moreButton">Подробнее</span></p>
                 </div>
                 <div class="col-md-4 col-lg-4 mb-4 d-flex align-items-center">
                     <div><img src="{{ asset('img/professional.jpg') }}" class="work-process"></div>
@@ -203,6 +204,9 @@
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <p class="mb-5 more-modal-text" style="text-align: left">
+                                    {% for i in dolPol %}
+                                        {{ i.item.name }}<br>
+                                    {% endfor %}
                                     1. Обеспечивает рациональную организацию труда среднего и младшего медицинского персонала, повышение их квалификации.<br>
                                     2. Осуществляет своевременную выписку, распределение и хранение перевязочных материалов, медикаментов и др., в том числе ядовитых и наркотических средств, ведет учет их расходования.<br>
                                     3. Контролирует: работу среднего и младшего медицинского персонала по приему и выписке больных; транспортировку больных внутри отделений больницы; выполнение средним медицинским персоналом врачебных
@@ -268,6 +272,28 @@
             </div>
         </div>
     </div>
+
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <!-- Footer Location-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4">РАЗРАБОТКА</h4>
+                    <p class="pre-wrap lead mb-0">2020 Exiting VIM г. Красноярск</p>
+
+                </div>
+                <!-- Footer Social Icons-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4"><a style="color: #fff; text-decoration: none" href="{{ path('archive_index') }}">БАЗА ПОЛНЫХ ИНСТРУКЦИЙ</a></h4>
+                </div>
+                <!-- Footer About Text-->
+                <div class="col-lg-4">
+                    <h4 class="mb-4">О ПРОДУКТЕ</h4>
+                    <p class="pre-wrap lead mb-0">Интеллектуальная система для автоматической генерации одностраничных инструкций</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 {% endblock %}
 {% block subjavascripts %}
     {{ parent() }}
