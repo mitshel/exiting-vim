@@ -18,10 +18,10 @@ class ItemWord
     private int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Word")
-     * @ORM\JoinColumn(name="id_word", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Core\Entity\Participles")
+     * @ORM\JoinColumn(name="iid", referencedColumnName="iid")
      */
-    private Word $word;
+    private Participles $word;
 
     /**
      * @ORM\ManyToOne(targetEntity="Item")
@@ -46,12 +46,12 @@ class ItemWord
         return $this;
     }
 
-    public function getWord(): Word
+    public function getWord(): Participles
     {
         return $this->word;
     }
 
-    public function setWord(Word $word): self
+    public function setWord(Participles $word): self
     {
         $this->word = $word;
 
