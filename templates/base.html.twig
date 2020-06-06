@@ -6,8 +6,10 @@
 
         {% block stylesheets %}
             {% if app.environment == 'dev' %}
+                <link rel="stylesheet" href="{{ asset('lib/jquery-ui/1.12.1/jquery-ui.css') }}" />
                 <link rel="stylesheet" href="{{ asset('lib/bootstrap/4.5.0/css/bootstrap.css') }}" />
             {% else %}
+                <link rel="stylesheet" href="{{ asset('lib/jquery-ui/1.12.1/jquery-ui.min.css') }}" />
                 <link rel="stylesheet" href="{{ asset('lib/bootstrap/4.5.0/css/bootstrap.min.css') }}" />
             {% endif %}
 
@@ -21,11 +23,13 @@
 
         {% block javascripts %}
             {% if app.environment == 'dev' %}
-                <script src="{{ asset('lib/jQuery/jquery-3.5.1.slim.js') }}"></script>
+                <script src="{{ asset('lib/jQuery/jquery-2.2.4.js') }}"></script>
+                <script src="{{ asset('lib/jquery-ui/1.12.1/jquery-ui.js') }}"></script>
                 <script src="{{ asset('lib/popper/2.4.0/popper.js') }}"></script>
                 <script src="{{ asset('lib/bootstrap/4.5.0/js/bootstrap.js') }}"></script>
             {% else %}
-                <script src="{{ asset('lib/jQuery/jquery-3.5.1.slim.min.js') }}"></script>
+                <script src="{{ asset('lib/jQuery/jquery-2.2.4.min.js') }}"></script>
+                <script src="{{ asset('lib/jquery-ui/1.12.1/jquery-ui.min.js') }}"></script>
                 <script src="{{ asset('lib/popper/2.4.0/popper.min.js') }}"></script>
                 <script src="{{ asset('lib/bootstrap/4.5.0/js/bootstrap.min.js') }}"></script>
             {% endif %}

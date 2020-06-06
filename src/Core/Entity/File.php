@@ -23,7 +23,7 @@ class File
     private string $filename;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="files")
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="files",cascade={"persist"})
      * @ORM\JoinColumn(name="id_post", referencedColumnName="id")
      */
     private ?Post $post;

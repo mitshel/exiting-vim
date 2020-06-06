@@ -18,13 +18,13 @@ class ItemWord
     private int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Core\Entity\Participles")
+     * @ORM\ManyToOne(targetEntity="Core\Entity\Participles",cascade={"persist"})
      * @ORM\JoinColumn(name="iid", referencedColumnName="iid")
      */
     private Participles $word;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\ManyToOne(targetEntity="Item",cascade={"persist"})
      * @ORM\JoinColumn(name="id_item", referencedColumnName="id")
      */
     private Item $item;

@@ -28,7 +28,7 @@ class Post
     /**
      * @ORM\OneToMany(targetEntity="File", mappedBy="post")
      */
-    private ArrayCollection $files;
+    private ?Collection $files;
 
     public function __construct()
     {
