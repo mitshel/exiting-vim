@@ -27,7 +27,7 @@ class SlovaController extends AbstractController
         $arr = array_column($items, 'name');
 
         $str = implode(' ', $arr);
-        dump('$str='.$str);
+        //dump('$str='.$str);
         $str = $this->regex($str);
 
 
@@ -54,10 +54,9 @@ class SlovaController extends AbstractController
             }
             $i++;
         }
-
         $str = $this->regex($str);
+        //dump ('$res='.$str);
         $str = $this->pred($str);
-        dump ('$res='.$str);
         return $this->render('slova.html.twig');
     }
 
@@ -129,7 +128,7 @@ class SlovaController extends AbstractController
         $str = str_replace('. .', '.', $str);
 
         $str = preg_replace('/,\s{2,},/u', '', $str);
-        $str = preg_replace('/,\s{2,}./u', '.', $str);
+        $str = preg_replace('/,\s{2,}\./u', '.', $str);
 
         $str = trim($str);
 
