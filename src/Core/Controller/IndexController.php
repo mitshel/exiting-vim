@@ -104,7 +104,7 @@ class IndexController extends AbstractController
     public function index()
     {
         /** @var NewText1 $doljnost */
-        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(5);
+        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(254);
         $dolPol = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
             'instruction' => $doljnost->getIntstr(),
             'section' => $doljnost->getSection()
@@ -118,16 +118,6 @@ class IndexController extends AbstractController
             'doljnost' => $doljnost->getText(),
             'dolPol' => $dolPol,
             'boss' => $this->getBoss(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="spec")
-     */
-    public function indexSpec($id)
-    {
-        return $this->render('spec.html.twig', [
-            'controller_name' => 'IndexController'
         ]);
     }
 
