@@ -39,3 +39,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
+    Core\Command\SchetCommand:
+        arguments: [ '@doctrine.orm.entity_manager']
+        tags:
+            - { name: 'console.command' }
+

@@ -18,10 +18,10 @@ class ItemWord
     private int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Core\Entity\Participles",cascade={"persist"})
-     * @ORM\JoinColumn(name="iid", referencedColumnName="iid")
+     * @ORM\ManyToOne(targetEntity="Core\Entity\Words",cascade={"persist"})
+     * @ORM\JoinColumn(name="id_word", referencedColumnName="iid")
      */
-    private Participles $word;
+    private Words $word;
 
     /**
      * @ORM\ManyToOne(targetEntity="Item",cascade={"persist"})
@@ -32,7 +32,7 @@ class ItemWord
     /**
      * @ORM\Column(name="cnt", type="integer")
      */
-    private int $cnt = 1;
+    private int $cnt = 0;
 
     public function getId(): ?int
     {
@@ -46,12 +46,12 @@ class ItemWord
         return $this;
     }
 
-    public function getWord(): Participles
+    public function getWord(): Words
     {
         return $this->word;
     }
 
-    public function setWord(Participles $word): self
+    public function setWord(Words $word): self
     {
         $this->word = $word;
 

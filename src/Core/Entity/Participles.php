@@ -43,6 +43,20 @@ class Participles
     private string $type;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="wcase", type="string")
+     */
+    private string $wCase;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code_parent", type="string")
+     */
+    private string $codeParent;
+
+    /**
      * @return int
      */
     public function getIid()
@@ -104,5 +118,37 @@ class Participles
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWCase()
+    {
+        return $this->wCase;
+    }
+
+    /**
+     * @param string $wCase
+     */
+    public function setWCase($wCase)
+    {
+        $this->wCase = $wCase;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCodeParent()
+    {
+        return $this->codeParent;
+    }
+
+    /**
+     * @param string $codeParent
+     */
+    public function setCodeParent($codeParent)
+    {
+        $this->codeParent = $codeParent;
     }
 }

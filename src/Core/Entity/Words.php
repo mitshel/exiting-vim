@@ -23,28 +23,36 @@ class Words
      *
      * @var string
      */
-    private string $word;
+    private ?string $word;
 
     /**
      * @ORM\Column(name="code", type="string")
      *
      * @var int
      */
-    private int $code;
+    private ?int $code;
 
     /**
      * @ORM\Column(name="code_parent", type="string")
      *
      * @var int
      */
-    private int $code_parent;
+    private ?int $code_parent;
 
     /**
      * @ORM\Column(name="type", type="string")
      *
      * @var string
      */
-    private string $type;
+    private ?string $type;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="wcase", type="string")
+     */
+    private ?string $wCase;
 
     /**
      * @return int
@@ -132,5 +140,21 @@ class Words
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWCase()
+    {
+        return $this->wCase;
+    }
+
+    /**
+     * @param string $wCase
+     */
+    public function setWCase($wCase)
+    {
+        $this->wCase = $wCase;
     }
 }
