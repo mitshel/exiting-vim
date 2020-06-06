@@ -108,21 +108,22 @@ class IndexController extends AbstractController
 
     /**
      * @Route("/fix", name="fix")
+     * @Route("/fix/{id}", name="fix_page")
      */
-    public function fix()
+    public function fix($id = 0)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $items = $em->getRepository(Item::class)->findAll();
+        $items = $em->getRepository(Item::class)->findBetween($id * 1000+1,$id * 1000+1000);
         /** @var Item $item */
         foreach ($items as $item) {
-            $item->setName(preg_replace ('/^[0-9:;.\-\s\t]+/i', '', $item->getName()));
+            $name = preg_replace ('/^[0-9:;.\-\s\t]+/i', '', $item->getName());
+            if ($name != $item->getName()) {
+                $item->setName($name);
 
-            echo '<pre>';
-            echo $item->getName();
-            echo '</pre>';
+                $em->persist($item);
+            }
 
-            $em->persist($item);
             $em->flush();
         }
         return new Response('OK');
@@ -165,7 +166,8 @@ class IndexController extends AbstractController
 4.12. Правила внутреннего трудового распорядка.
 4.13. Правила и нормы охраны труда.
 6. На время отсутствия инженера-программиста (отпуск, болезнь, пр.) его обязанности исполняет лицо, назначенное в установленном порядке. Данное лицо приобретает соответствующие права и несет ответственность за качественное и своевременное исполнение возложенных на него обязанностей.
-        ';        $this->fill($em, $post, $mainSection, $subject);
+        ';
+        $this->fill($em, $post, $mainSection, $subject);
 
         $obyazSection = $em->getRepository(Section::class)->find(2);
 
