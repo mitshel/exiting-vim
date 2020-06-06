@@ -27,25 +27,28 @@ class SlovaController extends AbstractController
         $arr = array_column($items, 'name');
 
         $str = implode(' ', $arr);
-        dump($str);
+        dump('$str='.$str);
         $str = $this->regex($str);
 
 
         $keywords = preg_split("/[\s,]+/", $str);
+        //dump($keywords);
         $i = 0;
         while ($i < count($keywords)) {
             if (mb_strlen($keywords[$i]) > 2) {
-
-
-
                 /** @var Participles $prich */
                 $prich = $this->getDoctrine()->getRepository(Participles::class)->word($keywords[$i]);
-                if ($prich && mb_substr($keywords[$i], 0, strlen($keywords[$i]) - 2) == mb_substr($prich->getWord(), 0, strlen($keywords[$i]) - 2)) {
-                    $pos = mb_strpos($str, $keywords[$i]);
-                    $posZ = $pos + mb_strpos(mb_substr($str, $pos), ',');
-                    $posZ2 = $pos + mb_strpos(mb_substr($str, $pos), '.');
-                    $str = str_replace(mb_substr($str, $pos, min($posZ, $posZ2)), ' ', $str);
+                if (
+                    $prich &&
+                    iconv_substr($keywords[$i], 0, strlen($keywords[$i]) - 2) ==
+                    iconv_substr($prich->getWord(), 0, strlen($keywords[$i]) - 2)
+                    ) {
+                    $pos = iconv_strpos($str, $keywords[$i]);
+                    $posZ =  iconv_strpos(iconv_substr($str, $pos), ',');
+                    $posZ2 = iconv_strpos(iconv_substr($str, $pos), '.');
+                    $str = str_replace(iconv_substr($str, $pos, min($posZ, $posZ2)), ' ', $str);
                     $str = $this->regex($str);
+                    dump ('$res='.$str);
                     $keywords = preg_split("/[\s,]+/", $str);
                 }
             }
