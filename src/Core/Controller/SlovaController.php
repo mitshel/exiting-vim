@@ -6,7 +6,6 @@ namespace Core\Controller;
 
 use Core\Entity\Instruction;
 use Core\Entity\Participles;
-use Core\Entity\Words;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,48 +19,56 @@ class SlovaController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $items = $this->getDoctrine()->getRepository(Instruction::class)->findBy([
-            'item' => 2
-        ]);
 
-        /** @var Instruction $item */
-        foreach ($items as $item) {
-            $str = $item->getItem()->getName();
+        $items = $this->getDoctrine()->getRepository(Instruction::class)->findArr(21);
+        $arr = array_column($items, 'it');
 
-            // Убираем порядковые номера разделов
-            $str = preg_replace('/([^а-яА-Яa-zA-Z\s\-\,\.\:])/u', '', $str);
+        $str = implode(' ', $arr);
 
-            // Убираем все что в скобке
-            $str = preg_replace('/\(.*?\)/u', '', $str);
+        // Убираем порядковые номера разделов
+        $str = preg_replace('/([^а-яА-ЯЁёЪъa-zA-Z\s\-\,\.\:])/u', '', $str);
 
-            // Убираем лишние точки
-            $str = preg_replace('/\.\s{2}./u', '.', $str);
+        // Убираем все что в скобке
+        $str = preg_replace('/\(.*?\)/u', '', $str);
 
-            $keywords = preg_split("/[\s,]+/", $str);
+        $str = preg_replace('/\.\s{2,}./u', '.', $str);
 
-            $i = 0;
-            while ($i < count($keywords)) {
-                if (mb_strlen($keywords[$i]) > 2) {
-                    echo($keywords[$i]);
-                    /** @var Participles $prich */
-                    $prich = $this->getDoctrine()->getRepository(Participles::class)->word($keywords[$i]);
-                    if ($prich) {
-                        $pos = strpos($str, $prich->getWord());
-                        $posZ = strpos(substr($str, $pos), ',');
-                        $str = str_replace(substr($str, $pos, $posZ), '', $str);
-                        $keywords = preg_split("/[\s,]+/", $str);
+        $str = preg_replace('/(Российская Федерация)|(Российской Федерации)/u', 'РФ', $str);
 
-                        $i = 0;
-                        break;
-                    }
+        print_r('<br>');
+        print_r('<br>');
+        print_r($str);
+        dump($str);
+        print_r('<br>');
+        print_r('<br>');
+        print_r(strlen($str));
+
+        $keywords = preg_split("/[\s,]+/", $str);
+        $i = 0;
+        while ($i < count($keywords)) {
+            if (mb_strlen($keywords[$i]) > 2) {
+
+                /** @var Participles $prich */
+                $prich = $this->getDoctrine()->getRepository(Participles::class)->word($keywords[$i]);
+                if ($prich && mb_substr($keywords[$i], 0, strlen($keywords[$i]) - 2) == mb_substr($prich->getWord(), 0, strlen($keywords[$i]) - 2)) {
+                    $pos = strpos($str, $prich->getWord());
+                    $posZ = strpos(mb_substr($str, $pos), ',');
+                    $str = str_replace(mb_substr($str, $pos, $posZ), ' ', $str);
+                    $str = preg_replace('/\.\s{2,}./u', '.', $str);
+                    $keywords = preg_split("/[\s,]+/", $str);
                 }
-                $i++;
             }
-
-            print_r('<br>');
-            print_r('<br>');
-            print_r($str);
+            $i++;
         }
+
+        print_r('<br>');
+        print_r('<br>');
+        $str = preg_replace('/\.{2,}/u', '', $str);
+        $str = preg_replace('/\.\s\./u', '.', $str);
+        print_r($str);
+        print_r('<br>');
+        print_r('<br>');
+        print_r(strlen($str));
 
 //        /** @var Words $slovo */
 //        $slova = $this->getDoctrine()->getRepository(Participles::class)->word('компьютер');
