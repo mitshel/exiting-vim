@@ -60,7 +60,6 @@ class ArchiveController extends AbstractController
                 'childs' => [],
             ];
         }
-        dump($posts);
 
         /** @var Post $post */
         foreach ($posts as $post) {
