@@ -1,10 +1,11 @@
 <?php
+
 namespace Core\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Core\Repository\InstructionContentRepository")
  * @ORM\Table(name="instructions_content")
  */
 class InstructionContent
