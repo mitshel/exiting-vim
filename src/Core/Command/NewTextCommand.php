@@ -4,8 +4,11 @@
 namespace Core\Command;
 
 
+use Core\Entity\Instruction;
 use Core\Entity\InstructionContent;
+use Core\Entity\NewText1;
 use Core\Entity\Participles;
+use Core\Entity\Section;
 use Core\Entity\Verbs;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Console\Command\Command;
@@ -33,12 +36,21 @@ class NewTextCommand extends Command
             '',
         ]);
 
-        $items = $this->em->getRepository(InstructionContent::class)->findArr();
-//
-//        foreach ($items as $item) {
-//
-//        }
-
+        $items = $this->em->getRepository(Instruction::class)->findAll();
+        $arr = [1, 2, 3, 4];
+        /** @var Instruction $item */
+        foreach ($items as $item) {
+            foreach ($arr as $i) {
+                $section = $this->em->getRepository(Section::class)->find($i);
+                $str = $this->str($item->getId(), $i);
+                $newtext = new NewText1();
+                $newtext->setSection($section);
+                $newtext->setIntstr($item);
+                $newtext->setText($str);
+                $this->em->persist($newtext);
+                $this->em->flush();
+            }
+        }
 
         return 0;
     }

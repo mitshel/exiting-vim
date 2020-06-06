@@ -23,10 +23,6 @@ class SlovaController extends AbstractController
     {
         $items = $this->getDoctrine()->getRepository(InstructionContent::class)->findArr(1, 2);
 
-        dump($items);
-
-        die;
-
         $arr = array_column($items, 'name');
 
         $str = implode(' ', $arr);
