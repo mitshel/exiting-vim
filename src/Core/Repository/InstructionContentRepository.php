@@ -19,7 +19,7 @@ class InstructionContentRepository extends ServiceEntityRepository
     public function findArr($post, $section)
     {
         $query = $this->createQueryBuilder('i')
-            ->select('i, ii.id ins, s.name sec, item.name')
+            ->select('i.id, ii.id ins, s.name sec, item.name')
             ->join('i.section', 's')
             ->join('i.instruction', 'ii')
             ->join('i.item', 'item')

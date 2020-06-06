@@ -21,13 +21,12 @@ class SlovaController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-
         $items = $this->getDoctrine()->getRepository(InstructionContent::class)->findArr(1, 2);
 
         $arr = array_column($items, 'name');
 
         $str = implode(' ', $arr);
-        dump($str);
+
         $str = $this->regex($str);
 
 
@@ -35,17 +34,19 @@ class SlovaController extends AbstractController
         $i = 0;
         while ($i < count($keywords)) {
             if (mb_strlen($keywords[$i]) > 2) {
-
-
-
                 /** @var Participles $prich */
                 $prich = $this->getDoctrine()->getRepository(Participles::class)->word($keywords[$i]);
-                if ($prich && mb_substr($keywords[$i], 0, strlen($keywords[$i]) - 2) == mb_substr($prich->getWord(), 0, strlen($keywords[$i]) - 2)) {
-                    $pos = mb_strpos($str, $keywords[$i]);
-                    $posZ = $pos + mb_strpos(mb_substr($str, $pos), ',');
-                    $posZ2 = $pos + mb_strpos(mb_substr($str, $pos), '.');
-                    $str = str_replace(mb_substr($str, $pos, min($posZ, $posZ2)), ' ', $str);
+                if (
+                    $prich &&
+                    iconv_substr($keywords[$i], 0, strlen($keywords[$i]) - 2) ==
+                    iconv_substr($prich->getWord(), 0, strlen($keywords[$i]) - 2)
+                    ) {
+                    $pos = iconv_strpos($str, $keywords[$i]);
+                    $posZ =  iconv_strpos(iconv_substr($str, $pos), ',');
+                    $posZ2 = iconv_strpos(iconv_substr($str, $pos), '.');
+                    $str = str_replace(iconv_substr($str, $pos, min($posZ, $posZ2)), ' ', $str);
                     $str = $this->regex($str);
+
                     $keywords = preg_split("/[\s,]+/", $str);
                 }
             }
@@ -54,7 +55,7 @@ class SlovaController extends AbstractController
 
         $str = $this->regex($str);
         $str = $this->pred($str);
-
+        dump ('$res='.$str);
         return $this->render('slova.html.twig');
     }
 
@@ -119,11 +120,14 @@ class SlovaController extends AbstractController
         $str = preg_replace('/,\s{0,},/u', ',', $str);
 
         if ($str[0] == '.') {
-            $str = mb_substr($str, 1);
+            $str = iconv_substr($str, 1);
 
         }
 
         $str = str_replace('. .', '.', $str);
+
+        $str = preg_replace('/,\s{2,},/u', '', $str);
+        $str = preg_replace('/,\s{2,}./u', '.', $str);
 
         $str = trim($str);
 
