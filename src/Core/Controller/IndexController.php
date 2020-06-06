@@ -26,6 +26,28 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @Route("/fix", name="fix")
+     */
+    public function fix()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $items = $em->getRepository(Item::class)->findAll();
+        /** @var Item $item */
+        foreach ($items as $item) {
+            $item->setName(preg_replace ('/^[0-9:;.\-\s\t]+/i', '', $item->getName()));
+
+            echo '<pre>';
+            echo $item->getName();
+            echo '</pre>';
+
+            $em->persist($item);
+            $em->flush();
+        }
+        return new Response('OK');
+    }
+
+    /**
      * @Route("/import", name="import")
      */
     public function import()
