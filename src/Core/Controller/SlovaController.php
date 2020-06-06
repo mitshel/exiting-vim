@@ -5,7 +5,9 @@ namespace Core\Controller;
 
 
 use Core\Entity\Instruction;
+use Core\Entity\InstructionContent;
 use Core\Entity\Participles;
+use Core\Entity\Verbs;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,11 +22,87 @@ class SlovaController extends AbstractController
     public function indexAction(Request $request)
     {
 
-        $items = $this->getDoctrine()->getRepository(Instruction::class)->findArr(21);
-        $arr = array_column($items, 'it');
+        $items = $this->getDoctrine()->getRepository(InstructionContent::class)->findArr(1, 2);
+
+        $arr = array_column($items, 'name');
 
         $str = implode(' ', $arr);
+        dump($str);
+        $str = $this->regex($str);
 
+
+        $keywords = preg_split("/[\s,]+/", $str);
+        $i = 0;
+        while ($i < count($keywords)) {
+            if (mb_strlen($keywords[$i]) > 2) {
+
+
+
+                /** @var Participles $prich */
+                $prich = $this->getDoctrine()->getRepository(Participles::class)->word($keywords[$i]);
+                if ($prich && mb_substr($keywords[$i], 0, strlen($keywords[$i]) - 2) == mb_substr($prich->getWord(), 0, strlen($keywords[$i]) - 2)) {
+                    $pos = mb_strpos($str, $keywords[$i]);
+                    $posZ = $pos + mb_strpos(mb_substr($str, $pos), ',');
+                    $posZ2 = $pos + mb_strpos(mb_substr($str, $pos), '.');
+                    $str = str_replace(mb_substr($str, $pos, min($posZ, $posZ2)), ' ', $str);
+                    $str = $this->regex($str);
+                    $keywords = preg_split("/[\s,]+/", $str);
+                }
+            }
+            $i++;
+        }
+
+        $str = $this->regex($str);
+        $str = $this->pred($str);
+
+        return $this->render('slova.html.twig');
+    }
+
+    private function pred($str)
+    {
+        $pred = explode('.', $str);
+
+        foreach ($pred as &$item) {
+            $slova = preg_split("/[\s,]+/", $item);
+            $i = 0;
+            foreach ($slova as &$slv) {
+                $i++;
+                if (empty($slv)) {
+                    unset($slv);
+                    $i = 0;
+                    continue;
+                }
+
+                if ($i == 1) {
+                    $verb = $this->getDoctrine()->getRepository(Verbs::class)->word2($slv);
+                    if (!$verb) {
+                        foreach ($slova as $k => &$slv2) {
+                            $verb2 = $this->getDoctrine()->getRepository(Verbs::class)->word2($slv2);
+                            if (!$verb2) {
+                                //dump($slv2);
+                                unset($slova[$k]);
+                            } else {
+                                $slova[$k] = ' ' . $slova[$k];
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                /*
+
+                if (!$verb){
+
+                }*/
+            }
+            $item = implode(' ', $slova);
+        }
+
+        return implode('.', $pred);
+    }
+
+    private function regex($str)
+    {
         // Убираем порядковые номера разделов
         $str = preg_replace('/([^а-яА-ЯЁёЪъa-zA-Z\s\-\,\.\:])/u', '', $str);
 
@@ -33,58 +111,22 @@ class SlovaController extends AbstractController
 
         $str = preg_replace('/\.\s{2,}./u', '.', $str);
 
-        $str = preg_replace('/(Российская Федерация)|(Российской Федерации)/u', 'РФ', $str);
+        $str = preg_replace('/(Российская Федерация)|(Российской Федерации)|(Российскую Федерацию)/u', 'РФ', $str);
 
-        print_r('<br>');
-        print_r('<br>');
-        print_r($str);
-        dump($str);
-        print_r('<br>');
-        print_r('<br>');
-        print_r(strlen($str));
+        $str = preg_replace('/\.{2}/u', '', $str);
 
-        $keywords = preg_split("/[\s,]+/", $str);
-        $i = 0;
-        while ($i < count($keywords)) {
-            if (mb_strlen($keywords[$i]) > 2) {
+        /** Убираем лишние запятые */
+        $str = preg_replace('/,\s{0,},/u', ',', $str);
 
-                /** @var Participles $prich */
-                $prich = $this->getDoctrine()->getRepository(Participles::class)->word($keywords[$i]);
-                if ($prich && mb_substr($keywords[$i], 0, strlen($keywords[$i]) - 2) == mb_substr($prich->getWord(), 0, strlen($keywords[$i]) - 2)) {
-                    $pos = strpos($str, $prich->getWord());
-                    $posZ = strpos(mb_substr($str, $pos), ',');
-                    $str = str_replace(mb_substr($str, $pos, $posZ), ' ', $str);
-                    $str = preg_replace('/\.\s{2,}./u', '.', $str);
-                    $keywords = preg_split("/[\s,]+/", $str);
-                }
-            }
-            $i++;
+        if ($str[0] == '.') {
+            $str = mb_substr($str, 1);
+
         }
 
-        print_r('<br>');
-        print_r('<br>');
-        $str = preg_replace('/\.{2,}/u', '', $str);
-        $str = preg_replace('/\.\s\./u', '.', $str);
-        print_r($str);
-        print_r('<br>');
-        print_r('<br>');
-        print_r(strlen($str));
+        $str = str_replace('. .', '.', $str);
 
-//        /** @var Words $slovo */
-//        $slova = $this->getDoctrine()->getRepository(Participles::class)->word('компьютер');
-//
-//        foreach ($slova as $slovo) {
-//            dump($slovo->getWord());
-//        }
+        $str = trim($str);
 
-
-        return $this->render('index.html.twig', [
-            'controller_name' => 'IndexController',
-        ]);
-    }
-
-    private function particitles($keywords)
-    {
-
+        return $str;
     }
 }

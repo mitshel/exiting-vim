@@ -6,8 +6,8 @@ namespace Core\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="verbs")
+ * @ORM\Entity(repositoryClass="Core\Repository\VerbsRepository")
+ * @ORM\Table(name="verbs_morf")
  */
 class Verbs
 {
@@ -22,7 +22,7 @@ class Verbs
     /**
      * @var string
      *
-     * @ORM\Column(name="verbs", type="string")
+     * @ORM\Column(name="word", type="string")
      */
     private string $word;
 
