@@ -1,0 +1,293 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'База полных инструкций' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Переопределенное ядро бутсрапа-->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    <!-- Переопределенные шрифты бутстрапа-->
+    <link rel="stylesheet" href="{{ asset('css/heading.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/body.css') }}">
+    <style>
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999999;
+        }
+
+        .sticky + .factoriesList {
+            padding-top: 100px;
+        }
+
+        .swiper-slide {
+            z-index: 810;
+            padding-bottom: 34px;
+            padding-top: 34px;
+            background-color: #fff;
+            height: 100px;
+            border-bottom: 1px solid #e0e7ea;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+        }
+
+        .swiper-slide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .letterList  {
+            width: 1100px;
+            margin: 0 auto;
+        }
+
+        .letterList li {
+            float: left;
+            margin-right: 5px;
+            display: block;
+            width: 32px;
+            height: 32px;
+            text-align: center;
+        }
+
+        .letterList a {
+            display: block;
+            width: 32px;
+            height: 32px;
+            color: #2975e8;
+            font-size: 20px;
+            line-height: 28px;
+            text-transform: uppercase;
+            background: transparent;
+            font-weight: bold;
+            border-radius: 50%;
+            box-sizing: border-box;
+            border: 1px solid transparent;
+            text-decoration: none;
+        }
+
+        .letterList a.active {
+            color: #fff;
+            background: #2975e8;
+        }
+
+        .letterList a:hover:not(.disabled) {
+            border-color: #c3cacd;
+        }
+
+        .letterList a.disabled {
+            color: #b8c7cc;
+            cursor: default;
+        }
+
+        .factoriesLetterItem {
+            min-height: 120px;
+        }
+
+        .factoriesLetterItem > div {
+            position: sticky;
+            top: 100px;
+        }
+
+        .factoriesLetterItem h2 {
+            margin-top: 0;
+            font-size: 60px;
+            font-weight: bold;
+            color: #121a24;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .factoriesLetterItem p {
+            color: #a1aeb2;
+            font-size: 18px;
+            font-style: italic;
+        }
+
+        .factoriesListItem {
+            border: 1px solid #dce3e6;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .factoriesItem {
+            border-bottom: 1px solid #dce3e6;
+            padding: 33px 0 31px 40px;
+            position: relative;
+            font-size: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .factoriesItem:only-child {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .factoriesItem:hover {
+            background: #f7f7f7;
+        }
+
+        .factoriesItem h3 {
+            margin-top: 0;
+            font-size: 30px;
+            font-weight: bold;
+            color: #121a24;
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                <img alt="Brand" src="{{ asset('img/logo.png') }}" height="45px"> Quick Dive</a>
+            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
+                    type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Меню <i
+                        class="fas fa-bars"></i></button>
+            {#            <div class="collapse navbar-collapse" id="navbarResponsive">#}
+            {#                <ul class="navbar-nav ml-auto">#}
+            {#                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"#}
+            {#                                                         href="#im">ОБЯЗАННОСТИ</a>#}
+
+            {#                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"#}
+            {#                                                         href="#law">ПРАВА</a>#}
+
+            {#                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"#}
+            {#                                                         href="#liability">ОТВЕТСТВЕННОСТЬ</a>#}
+            {#                    </li>#}
+            {#                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"#}
+            {#                                                         href="#addition">ДОПОЛНИТЕЛЬНЫЯ ИНФОРМАЦИЯ</a>#}
+            {#                    </li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </nav>
+    <header class="masthead bg-primary text-white text-center background"
+            style="background-image: url({{ asset('img/rosback8.jpg') }})">
+        <div class="container d-flex align-items-center flex-column backtext">
+            <h1 class="masthead-heading mb-0">{{ title }}</h1>
+            <!-- Icon Divider-->
+            {#<div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+            </div>#}
+            <!-- Masthead Subheading-->
+            {#<p class="pre-wrap masthead-subheading font-weight-light mb-0">Отдел разработки и внедрения информационных систем</p>#}
+        </div>
+    </header>
+    <div class="container-fluid m-0 p-0" id="alpha">
+        <div class="swiper-slide">
+            <ul class="letterList">
+                {% for key,item in data %}
+                    <li><a href="#{{ key }}" class="{% if item.childs|length == 0 %}disabled{% endif %} js-scroll-trigger">{{ item.letter }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-xl container-fluid factoriesList">
+        {% for key,item in data %}
+            {% if item.childs|length > 0 %}
+                <div class="row" id="{{ key }}">
+                    <div class="d-none d-lg-block col-lg-3 factoriesLetterItem">
+                        <div class="float-title position-sticky">
+                            <h2>{{ item.letter }}</h2>
+                            <p>{{ item.childs|length }} инструкций</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 p-0 factoriesListItem">
+                        {% for child in item.childs %}
+                            <div class="factoriesItem">
+                                <h3>{{ child.name }}</h3>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block subjavascripts %}
+    {{ parent() }}
+    <script src="{{ asset('lib/fontawesome-free-5.5.0-web/js/all.min.js') }}"></script>
+    <script>
+        (function($) {
+            "use strict"; // Start of use strict
+
+            // Smooth scrolling using jQuery easing
+            $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        $('html, body').animate({
+                            scrollTop: (target.offset().top - 99)
+                        }, 1000, "easeInOutExpo");
+                        return false;
+                    }
+                }
+            });
+
+            var navbarCollapse = function() {
+                if ($("#mainNav").offset().top > 50) {
+                    $("#mainNav").addClass("navbar-shrink");
+                } else {
+                    $("#mainNav").removeClass("navbar-shrink");
+                }
+            };
+            // Collapse now if page is not at top
+            navbarCollapse();
+            // Collapse the navbar when page is scrolled
+            $(window).scroll(navbarCollapse);
+        })(jQuery);
+
+        $(window).scroll(function() {
+            $('.factoriesLetterItem').each(function( index ) {
+                let id = $(this).closest('.row').prop('id');
+
+                let wt = $(window).scrollTop();
+                let wh = $(window).height();
+                let et = $(this).offset().top;
+                let eh = $(this).outerHeight();
+
+                if (id == 'v') {
+                    console.log(wt + wh >= et);
+                    console.log(wt + wh - eh * 2 - 1 <= et + (wh - eh));
+                }
+
+                if (wt + wh >= et && wt + wh - eh * 2 <= et + (wh - eh)  - 100) {
+                    $('a[href="#' + id +'"]').addClass('active');
+                } else {
+                    $('a[href="#' + id +'"]').removeClass('active');
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $(window).scroll();
+        });
+
+        window.onscroll = function() {myFunction()};
+
+        // Get the header
+        var header = document.getElementById("alpha");
+
+        // Get the offset position of the navbar
+        var sticky = header.offsetTop;
+
+        // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script>
+{% endblock %}
