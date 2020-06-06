@@ -79,7 +79,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
     margin-top: 0;
-    margin-bottom: 1rem
+    margin-bottom: .75rem
 }
 
 abbr[data-original-title], abbr[title] {
@@ -9962,7 +9962,7 @@ a.text-dark:focus, a.text-dark:hover {
 
 @media (min-width: 992px) {
     .portfolio-modal .portfolio-modal-title {
-        font-size: 3rem;
+        font-size: 2.25rem;
         line-height: 2.5rem
     }
 }
@@ -10079,7 +10079,7 @@ form .row:first-child .floating-label-form-group {
 }
 .work-process{
     width: 100%;
-    margin: 5em auto;
+    /*margin: 5em auto;*/
 }
 
 .background{
@@ -10090,6 +10090,7 @@ form .row:first-child .floating-label-form-group {
     border: 1px solid #1c5dbe;
     padding: 10px;
     cursor: pointer;
+    display: inline-block;
 }
 
 .more-modal-text {
@@ -10097,12 +10098,15 @@ form .row:first-child .floating-label-form-group {
 }
 
 .addition-item {
-    height: 200px;
+    height: 150px;
     padding: 35px 20px;
     cursor: pointer;
     color: #2c3e50;
     /* background: #48569d; */
     border-bottom: 1px solid #2c3e50;
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
 }
 
 .addition-item:hover {
