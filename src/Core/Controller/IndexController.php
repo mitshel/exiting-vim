@@ -6,9 +6,12 @@ namespace Core\Controller;
 
 use Core\Entity\File;
 use Core\Entity\Instruction;
+use Core\Entity\InstructionContent;
 use Core\Entity\Item;
+use Core\Entity\Participles;
 use Core\Entity\Post;
 use Core\Entity\Section;
+use Core\Entity\Verbs;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,8 +23,10 @@ class IndexController extends AbstractController
      */
     public function index()
     {
+
+
         return $this->render('index.html.twig', [
-            'controller_name' => 'IndexController',
+//            'doljnost' => $strDoljnost,
         ]);
     }
 
@@ -62,7 +67,8 @@ class IndexController extends AbstractController
 4.12. Правила внутреннего трудового распорядка.
 4.13. Правила и нормы охраны труда.
 6. На время отсутствия инженера-программиста (отпуск, болезнь, пр.) его обязанности исполняет лицо, назначенное в установленном порядке. Данное лицо приобретает соответствующие права и несет ответственность за качественное и своевременное исполнение возложенных на него обязанностей.
-        ';        $this->fill($em, $post, $mainSection, $subject);
+        ';
+        $this->fill($em, $post, $mainSection, $subject);
 
         $obyazSection = $em->getRepository(Section::class)->find(2);
 
@@ -110,11 +116,12 @@ class IndexController extends AbstractController
         return new Response('OK');
     }
 
-    public function fill($em, $post, $section, $subject) {
+    public function fill($em, $post, $section, $subject)
+    {
         echo '<pre>';
         echo $section->getName() . PHP_EOL;
 
-        foreach(preg_split("/((\r?\n)|(\r\n?))/", $subject) as $line){
+        foreach (preg_split("/((\r?\n)|(\r\n?))/", $subject) as $line) {
             $line = trim($line);
             if (empty($line)) {
                 continue;
