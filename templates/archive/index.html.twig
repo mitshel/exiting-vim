@@ -189,7 +189,7 @@
             </ul>
         </div>
     </div>
-    <div class="container-xl container-fluid factoriesList">
+    <div class="container-xl container-fluid factoriesList pb-5">
         {% for key,item in data %}
             {% if item.childs|length > 0 %}
                 <div class="row" id="{{ key }}">
@@ -201,7 +201,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 p-0 factoriesListItem">
                         {% for child in item.childs %}
-                            <div class="factoriesItem">
+                            <div class="factoriesItem" onclick="document.location.href = '{{ path('archive_spec', {'id': child.id}) }}'">
                                 <h3>{{ child.name }}</h3>
                             </div>
                         {% endfor %}
@@ -210,6 +210,28 @@
             {% endif %}
         {% endfor %}
     </div>
+
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <!-- Footer Location-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4">РАЗРАБОТКА</h4>
+                    <p class="pre-wrap lead mb-0">2020 Exiting VIM г. Красноярск</p>
+
+                </div>
+                <!-- Footer Social Icons-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4"><a style="color: #fff; text-decoration: none" href="{{ path('archive_index') }}">БАЗА ПОЛНЫХ ИНСТРУКЦИЙ</a></h4>
+                </div>
+                <!-- Footer About Text-->
+                <div class="col-lg-4">
+                    <h4 class="mb-4">О ПРОДУКТЕ</h4>
+                    <p class="pre-wrap lead mb-0">Интеллектуальная система для автоматической генерации одностраничных инструкций</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 {% endblock %}
 
