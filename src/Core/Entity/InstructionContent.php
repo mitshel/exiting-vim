@@ -1,14 +1,13 @@
 <?php
-
 namespace Core\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="item_word")
+ * @ORM\Table(name="instructions_content")
  */
-class ItemWord
+class InstructionContent
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -18,10 +17,10 @@ class ItemWord
     private int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Core\Entity\Participles",cascade={"persist"})
-     * @ORM\JoinColumn(name="iid", referencedColumnName="iid")
+     * @ORM\ManyToOne(targetEntity="Instruction",cascade={"persist"})
+     * @ORM\JoinColumn(name="id_instruction", referencedColumnName="id")
      */
-    private Participles $word;
+    private Instruction $instruction;
 
     /**
      * @ORM\ManyToOne(targetEntity="Item",cascade={"persist"})
@@ -30,9 +29,10 @@ class ItemWord
     private Item $item;
 
     /**
-     * @ORM\Column(name="cnt", type="integer")
+     * @ORM\ManyToOne(targetEntity="Section",cascade={"persist"})
+     * @ORM\JoinColumn(name="id_section", referencedColumnName="id")
      */
-    private int $cnt = 1;
+    private Section $section;
 
     public function getId(): ?int
     {
@@ -46,14 +46,14 @@ class ItemWord
         return $this;
     }
 
-    public function getWord(): Participles
+    public function getInstruction(): Instruction
     {
-        return $this->word;
+        return $this->instruction;
     }
 
-    public function setWord(Participles $word): self
+    public function setInstruction(Instruction $instruction): self
     {
-        $this->word = $word;
+        $this->instruction = $instruction;
 
         return $this;
     }
@@ -70,14 +70,17 @@ class ItemWord
         return $this;
     }
 
-    public function getCnt(): int
+    public function getSection(): Section
     {
-        return $this->cnt;
+        return $this->section;
     }
 
-    public function setCnt(int $cnt): self
+    public function setSection(Section $section): self
     {
-        $this->cnt = $cnt;
+        $this->section = $section;
+
         return $this;
     }
+
+
 }

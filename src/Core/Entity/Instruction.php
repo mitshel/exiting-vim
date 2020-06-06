@@ -17,22 +17,10 @@ class Instruction
     private int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Post")
+     * @ORM\ManyToOne(targetEntity="Post",cascade={"persist"})
      * @ORM\JoinColumn(name="id_post", referencedColumnName="id")
      */
     private Post $post;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Item")
-     * @ORM\JoinColumn(name="id_item", referencedColumnName="id")
-     */
-    private Item $item;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Section")
-     * @ORM\JoinColumn(name="id_section", referencedColumnName="id")
-     */
-    private Section $section;
 
     public function getId(): ?int
     {
@@ -57,30 +45,4 @@ class Instruction
 
         return $this;
     }
-
-    public function getItem(): Item
-    {
-        return $this->item;
-    }
-
-    public function setItem(Item $item): self
-    {
-        $this->item = $item;
-
-        return $this;
-    }
-
-    public function getSection(): Section
-    {
-        return $this->section;
-    }
-
-    public function setSection(Section $section): self
-    {
-        $this->section = $section;
-
-        return $this;
-    }
-
-
 }
