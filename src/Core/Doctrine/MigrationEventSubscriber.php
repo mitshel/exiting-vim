@@ -30,6 +30,6 @@ class MigrationEventSubscriber implements EventSubscriber
             return;
         }
 
-        $schema->createNamespace('public');
+        //$schema->createNamespace('public');
     }
 }

@@ -12,6 +12,8 @@ class Section
 {
     /**
      * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue()
+     * @ORM\Id
      */
     private int $id;
 
