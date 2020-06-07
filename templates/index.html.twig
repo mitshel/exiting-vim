@@ -14,6 +14,7 @@
             text-align: left;
             font-weight: 700;
         }
+
         #dropdownAcc:active, #dropdownAcc:focus {
             border: none;
             background: none;
@@ -66,7 +67,7 @@
     <nav class="navbar navbar-expand-xl bg-secondary fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand js-scroll-trigger" href="{{ path('home') }}">
-            <img alt="Brand" src="{{ asset('img/logo.png') }}" height="45px"> Quick Dive</a>
+                <img alt="Brand" src="{{ asset('img/logo.png') }}" height="45px"> Quick Dive</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                     type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Меню <i
@@ -113,18 +114,20 @@
             </div>
         </div>
     </nav>
-    <header class="masthead bg-primary text-white text-center background" style="background-image: url({{ asset('img/rosback8.jpg') }})">
+    <header class="masthead bg-primary text-white text-center background"
+            style="background-image: url({{ asset('img/rosback8.jpg') }})">
         <div class="container d-flex align-items-center flex-column backtext">
             <h1 class="masthead-heading mb-0">ИНЖЕНЕР-ПРОГРАММИСТ</h1>
             <p class="pre-wrap masthead-subheading font-weight-light mb-0">Краткая должностная инструкция</p>
         </div>
     </header>
-    {% if boss is defined and boss is not null%}
+    {% if boss is defined and boss is not null %}
         <section class="page-section">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-12 col-lg-12 mb-12">
-                        <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Подчиняется {{ boss }}</h2>
+                        <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">
+                            Подчиняется {{ boss }}</h2>
                     </div>
                 </div>
             </div>
@@ -136,9 +139,13 @@
             <div class="row justify-content-center">
                 <!-- Portfolio Items-->
                 <div class="col-md-8 col-lg-8 mb-8 professional-description">
-                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Должностные обязанности<hr></h2>
+                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Должностные
+                        обязанности
+                        <hr>
+                    </h2>
                     <p>{{ doljnost }}</p>
-                    <p><span data-toggle="modal" data-target="#modalDesctiptionIm" class="moreButton">Подробнее</span></p>
+                    <p><span data-toggle="modal" data-target="#modalDesctiptionIm" class="moreButton">Подробнее</span>
+                    </p>
                 </div>
                 <div class="col-md-4 col-lg-4 mb-4 d-flex align-items-center">
                     <div><img src="{{ asset('img/professional.jpg') }}" class="work-process"></div>
@@ -152,13 +159,12 @@
             <div class="row justify-content-center">
 
                 <div class="col-md-8 col-lg-8 mb-8 professional-description">
-                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Права<hr></h2>
-                    <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
-                    <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
-                    <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
-                    <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
-                    <p>Определяет возможность использования готовых программных продуктов.</p>
-                    <div><span data-toggle="modal" data-target="#modalDesctiptionLaw" class="moreButton">Подробнее</span></div>
+                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Права
+                        <hr>
+                    </h2>
+                    <p>{{ prava }}</p>
+                    <div><span data-toggle="modal" data-target="#modalDesctiptionLaw"
+                               class="moreButton">Подробнее</span></div>
                 </div>
                 <div class="col-md-4 col-lg-4 mb-4 d-flex align-items-center">
                     <img src="{{ asset('img/prava.jpg') }}" class="work-process">
@@ -171,13 +177,16 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-8 mb-8 professional-description">
-                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Ответственность<hr></h2>
-                    <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
-                    <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
-                    <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
-                    <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
-                    <p>Определяет возможность использования готовых программных продуктов.</p>
-                    <div><span data-toggle="modal" data-target="#modalDesctiptionLiability" class="moreButton">Подробнее</span></div>
+                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Ответственность
+                        <hr>
+                    </h2>
+                    <p>
+                        {% for i in otvet %}
+                            {{ i.item.name }}
+                        {% endfor %}
+                    </p>
+                    <div><span data-toggle="modal" data-target="#modalDesctiptionLiability"
+                               class="moreButton">Подробнее</span></div>
                 </div>
                 <div class="col-md-4 col-lg-4 mb-4 d-flex align-items-center">
                     <img src="{{ asset('img/law.jpg') }}" class="work-process">
@@ -364,10 +373,12 @@
     </section>
 
     <!-- Portfolio Modal-->
-    <div class="portfolio-modal modal fade" id="modalDesctiptionIm" tabindex="-1" role="dialog" aria-labelledby="#modalDesctiptionImLabel" aria-hidden="true">
+    <div class="portfolio-modal modal fade" id="modalDesctiptionIm" tabindex="-1" role="dialog"
+         aria-labelledby="#modalDesctiptionImLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
+                                class="fas fa-times"></i></span></button>
                 <div class="modal-body text-center">
                     <div class="container">
                         <div class="row justify-content-center">
@@ -382,10 +393,6 @@
                                     {% for i in dolPol %}
                                         {{ i.item.name }}<br>
                                     {% endfor %}
-                                    1. Обеспечивает рациональную организацию труда среднего и младшего медицинского персонала, повышение их квалификации.<br>
-                                    2. Осуществляет своевременную выписку, распределение и хранение перевязочных материалов, медикаментов и др., в том числе ядовитых и наркотических средств, ведет учет их расходования.<br>
-                                    3. Контролирует: работу среднего и младшего медицинского персонала по приему и выписке больных; транспортировку больных внутри отделений больницы; выполнение средним медицинским персоналом врачебных
-                                    назначений; санитарно-гигиеническое содержание отделений больницы, одежды и белья больных; своевременность и качество дезинфекции помещений, где находились инфекционные больные.<br>
                                 </p>
                             </div>
                         </div>
@@ -394,10 +401,12 @@
             </div>
         </div>
     </div><!-- Portfolio Modal-->
-    <div class="portfolio-modal modal fade" id="modalDesctiptionLaw" tabindex="-1" role="dialog" aria-labelledby="#modalDesctiptionLawLabel" aria-hidden="true">
+    <div class="portfolio-modal modal fade" id="modalDesctiptionLaw" tabindex="-1" role="dialog"
+         aria-labelledby="#modalDesctiptionLawLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
+                                class="fas fa-times"></i></span></button>
                 <div class="modal-body text-center">
                     <div class="container">
                         <div class="row justify-content-center">
@@ -408,10 +417,9 @@
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <p class="mb-5 more-modal-text" style="text-align: left">
-                                    1. Обеспечивает рациональную организацию труда среднего и младшего медицинского персонала, повышение их квалификации.<br>
-                                    2. Осуществляет своевременную выписку, распределение и хранение перевязочных материалов, медикаментов и др., в том числе ядовитых и наркотических средств, ведет учет их расходования.<br>
-                                    3. Контролирует: работу среднего и младшего медицинского персонала по приему и выписке больных; транспортировку больных внутри отделений больницы; выполнение средним медицинским персоналом врачебных
-                                    назначений; санитарно-гигиеническое содержание отделений больницы, одежды и белья больных; своевременность и качество дезинфекции помещений, где находились инфекционные больные.<br>
+                                    {% for i in pravaPol %}
+                                        {{ i.item.name }}<br>
+                                    {% endfor %}
                                 </p>
                             </div>
                         </div>
@@ -420,10 +428,12 @@
             </div>
         </div>
     </div>
-    <div class="portfolio-modal modal fade" id="modalDesctiptionLiability" tabindex="-1" role="dialog" aria-labelledby="modalDesctiptionLiabilityLabel" aria-hidden="true">
+    <div class="portfolio-modal modal fade" id="modalDesctiptionLiability" tabindex="-1" role="dialog"
+         aria-labelledby="modalDesctiptionLiabilityLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
+                                class="fas fa-times"></i></span></button>
                 <div class="modal-body text-center">
                     <div class="container">
                         <div class="row justify-content-center">
@@ -435,10 +445,9 @@
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <p class="mb-5 more-modal-text" style="text-align: left">
-                                    1. Обеспечивает рациональную организацию труда среднего и младшего медицинского персонала, повышение их квалификации.<br>
-                                    2. Осуществляет своевременную выписку, распределение и хранение перевязочных материалов, медикаментов и др., в том числе ядовитых и наркотических средств, ведет учет их расходования.<br>
-                                    3. Контролирует: работу среднего и младшего медицинского персонала по приему и выписке больных; транспортировку больных внутри отделений больницы; выполнение средним медицинским персоналом врачебных
-                                    назначений; санитарно-гигиеническое содержание отделений больницы, одежды и белья больных; своевременность и качество дезинфекции помещений, где находились инфекционные больные.<br>
+                                    {% for i in otvetPol %}
+                                        {{ i.item.name }}<br>
+                                    {% endfor %}
                                 </p>
                             </div>
                         </div>
@@ -459,12 +468,14 @@
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="mb-4"><a style="color: #fff; text-decoration: none" href="{{ path('archive_index') }}">БАЗА ПОЛНЫХ ИНСТРУКЦИЙ</a></h4>
+                    <h4 class="mb-4"><a style="color: #fff; text-decoration: none" href="{{ path('archive_index') }}">БАЗА
+                            ПОЛНЫХ ИНСТРУКЦИЙ</a></h4>
                 </div>
                 <!-- Footer About Text-->
                 <div class="col-lg-4">
                     <h4 class="mb-4">О ПРОДУКТЕ</h4>
-                    <p class="pre-wrap lead mb-0">Интеллектуальная система для автоматической генерации одностраничных инструкций</p>
+                    <p class="pre-wrap lead mb-0">Интеллектуальная система для автоматической генерации одностраничных
+                        инструкций</p>
                 </div>
             </div>
         </div>

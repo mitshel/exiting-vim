@@ -30,7 +30,7 @@ class IndexController extends AbstractController
         /** @var NewText1 $doljnost */
         $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find($id);
         $inst = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
-            'instruction' =>  $doljnost->getIntstr(),
+            'instruction' => $doljnost->getIntstr(),
             'section' => 1,
         ], ['id' => 'asc']);
 
@@ -102,10 +102,23 @@ class IndexController extends AbstractController
     public function index(Request $request)
     {
         /** @var NewText1 $doljnost */
-        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(237);
+        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(1356);
+        $prava = $this->getDoctrine()->getRepository(NewText1::class)->find(1357);
+        $otvet = $this->getDoctrine()->getRepository(NewText1::class)->find(1358);
+
         $dolPol = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
             'instruction' => $doljnost->getIntstr(),
             'section' => $doljnost->getSection()
+        ]);
+
+        $pravaPol = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
+            'instruction' => $prava->getIntstr(),
+            'section' => $prava->getSection()
+        ]);
+
+        $otvetPol = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
+            'instruction' => $otvet->getIntstr(),
+            'section' => $otvet->getSection()
         ]);
 
         if ($request->getRequestUri() == '/api/') {
@@ -124,7 +137,10 @@ class IndexController extends AbstractController
         return $this->render('index.html.twig', [
             'doljnost' => $doljnost->getText(),
             'dolPol' => $dolPol,
-            //'boss' => $this->getBoss(5),
+            'prava' => $prava->getText(),
+            'pravaPol' => $pravaPol,
+            'otvet' => $otvetPol,
+            'otvetPol' => $otvetPol
         ]);
     }
 
@@ -136,10 +152,10 @@ class IndexController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $items = $em->getRepository(Item::class)->findBetween($id * 1000+1,$id * 1000+1000);
+        $items = $em->getRepository(Item::class)->findBetween($id * 1000 + 1, $id * 1000 + 1000);
         /** @var Item $item */
         foreach ($items as $item) {
-            $name = preg_replace ('/^[0-9:;.\-\s\t]+/i', '', $item->getName());
+            $name = preg_replace('/^[0-9:;.\-\s\t]+/i', '', $item->getName());
             if ($name != $item->getName()) {
                 $item->setName($name);
 
