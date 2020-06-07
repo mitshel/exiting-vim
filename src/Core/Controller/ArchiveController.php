@@ -7,6 +7,8 @@ use Core\Entity\InstructionContent;
 use Core\Entity\Post;
 use Core\Entity\Section;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -16,8 +18,9 @@ class ArchiveController extends AbstractController
 {
     /**
      * @Route("/", name="index")
+     * @Route("/api", name="index_api")
      */
-    public function base()
+    public function base(Request $request)
     {
         $map = [
             'a' => 'А',
@@ -74,10 +77,26 @@ class ArchiveController extends AbstractController
             }
         }
 
+        if ($request->get('_route') == 'archive_index_api') {
+            $data = [];
+
+            /** @var Post $post */
+            foreach ($posts as $post) {
+                $data[] = [
+                    'id' => $post->getId(),
+                    'name' => $post->getName()
+                ];
+            }
+
+            return new JsonResponse($data);
+        }
+
         return $this->render('archive/index.html.twig', [
             'data' => $data,
         ]);
     }
+
+
 
 
     /**

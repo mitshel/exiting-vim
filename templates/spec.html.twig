@@ -23,6 +23,41 @@
             border-radius: 0px !important;
         }
 
+        .nav-search {
+            min-width: 320px;
+            width: 100%;
+        }
+        .twitter-typeahead {
+            min-width: 320px ;
+        }
+
+        .d-xl-none .twitter-typeahead {
+            width: 100%;
+        }
+        .d-xl-none .tt-menu {
+            width: 100%;
+        }
+
+        .tt-menu {
+            background: #fff;
+            border: 2px solid;
+            border-color: #6bebd1;
+            border-top: none;
+            box-shadow: 0 0 0 0.2rem rgba(26, 188, 156, .25);
+            width: 320px;
+        }
+
+        .align-items-center .tt-menu {
+            margin-left: 1rem !important;
+        }
+
+        .tt-selectable {
+            padding: .25rem .5rem;
+        }
+        .tt-selectable:hover, .tt-selectable.tt-cursor {
+            background: rgba(26, 188, 156, .25);
+            cursor: pointer;
+        }
     </style>
 {% endblock %}
 {% block title %}{{ post.name }}{% endblock %}
@@ -50,6 +85,13 @@
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                                                          href="{{ path('archive_index')}}">{% apply upper %}База полных инструкций{% endapply %}</a>
                     </li>
+                    <li class="nav-item mx-0 d-none d-xl-flex align-items-center">
+                        <form class="form-inline d-flex justify-content-center md-form form-sm mt-0" id="searchOpen">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                            <input class="form-control form-control-sm ml-3 w-75 nav-search" type="text" placeholder="Поиск..." style="display: none;"
+                                   aria-label="Поиск...">
+                        </form>
+                    </li>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <li class="nav-item mx-0 mx-lg-1 dropdown">
                             <button class="w-100 nav-link py-3 px-0 px-lg-3 rounded border-0" id="dropdownAcc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span class="ml-3 d-xl-none">АККАУНТ</span></button>
@@ -63,6 +105,11 @@
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ path('login') }}" ><i class="fa fa-user"></i><span class="ml-3 d-xl-none">ВОЙТИ</span></a>
                         </li>
                     {% endif %}
+                    <li class="nav-item mt-2 mx-0 d-xl-none">
+                        <div class="form-group px-0 px-lg-3 ">
+                            <input type="text" name="search" class="form-control nav-search" placeholder="Поиск...">
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -155,5 +202,6 @@
 {% block subjavascripts %}
     {{ parent() }}
     <script src="{{ asset('lib/fontawesome-free-5.5.0-web/js/all.min.js') }}"></script>
+    <script src="{{ asset('lib/typehead/typehead.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
 {% endblock %}
