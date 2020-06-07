@@ -10,7 +10,7 @@ use Core\Entity\NewText1;
 use Core\Entity\Participles;
 use Core\Entity\Section;
 use Core\Entity\Verbs;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -116,19 +116,18 @@ class NewTextCommand extends Command
         $keywords = preg_split("/[\s,]+/", $str);
         $i = 0;
         while ($i < count($keywords)) {
-            if (iconv_strlen($keywords[$i]) > 2) {
+            if (mb_strlen($keywords[$i]) > 2) {
                 /** @var Participles $prich */
                 $prich = $this->em->getRepository(Participles::class)->word($keywords[$i]);
-                if ($prich && iconv_substr($keywords[$i], 0, iconv_strlen($keywords[$i]) - 2) == iconv_substr($prich->getWord(), 0, iconv_strlen($keywords[$i]) - 2)) {
-                    $pos = iconv_strpos($str, $keywords[$i]) + iconv_strlen($keywords[$i]);
-                    $rrr = iconv_strpos(iconv_substr($str, $pos), ',') - 1;
-                    $pos += $rrr;
-
-                    $posZ = $pos + iconv_strpos(iconv_substr($str, $pos), ',');
-
-                    $posZ2 = $pos + iconv_strpos(iconv_substr($str, $pos), '.');
-                    $str = str_replace(iconv_substr($str, $pos, min($posZ, $posZ2)), '', $str);
-
+                if (
+                    $prich &&
+                    iconv_substr($keywords[$i], 0, strlen($keywords[$i]) - 2) ==
+                    iconv_substr($prich->getWord(), 0, strlen($keywords[$i]) - 2)
+                ) {
+                    $pos = iconv_strpos($str, $keywords[$i]);
+                    $posZ =  iconv_strpos(iconv_substr($str, $pos), ',');
+                    $posZ2 = iconv_strpos(iconv_substr($str, $pos), '.');
+                    $str = str_replace(iconv_substr($str, $pos, min($posZ, $posZ2)), ' ', $str);
                     $str = $this->regex($str);
                     $keywords = preg_split("/[\s,]+/", $str);
                 }
@@ -196,12 +195,15 @@ class NewTextCommand extends Command
         /** Убираем лишние запятые */
         $str = preg_replace('/,\s{0,},/u', ',', $str);
 
-        if (isset($str[0]) && $str[0] == '.') {
+        if (isset ($str[0]) && ($str[0] == '.')) {
             $str = iconv_substr($str, 1);
 
         }
 
         $str = str_replace('. .', '.', $str);
+
+        $str = preg_replace('/,\s{2,},/u', '', $str);
+        $str = preg_replace('/,\s{2,}\./u', '.', $str);
 
         $str = trim($str);
 
