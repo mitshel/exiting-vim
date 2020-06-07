@@ -27,27 +27,21 @@ class IndexController extends AbstractController
      */
     public function getBoss($id = null)
     {
-        $subject = ' 4.6. Методы экономического анализа хозяйственно-финансовой деятельности предприятия.
-4.7.		
+        /** @var NewText1 $doljnost */
+        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find($id);
+        $inst = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
+            'instruction' =>  $doljnost->getIntstr(),
+            'section' => 1,
+        ], ['id' => 'asc']);
 
- 4.8. Правила эксплуатации вычислительной техники.
- 4.9. Основы экономики, организации труда и управления.
- 4.10. Рыночные методы хозяйствования.
- 4.11. Законодательство о труде.
- 4.12. Правила внутреннего трудового распорядка.
- 4.13. Правила и нормы охраны труда.
- 4.14. 		
+        $data = [];
+        /** @var InstructionContent $item */
+        foreach ($inst as $item) {
+            $data[] = $item->getItem()->getName();
+        }
 
- 5. Бухгалтер в своей работе руководствуется:
- 5.1. Положением о бухгалтерии организации.
- 5.2. Настоящей должностной инструкцией.
-5.3		
-
- 6. Бухгалтер подчиняется непосредственно главному бухгалтеру организации или руководителю соответствующего структурного подразделения главной бухгалтерии.
- 7. На время отсутствия бухгалтера (отпуск, болезнь, пр.) его обязанности исполняет лицо, назначенное в установленном порядке, которое 
- приобретает соответствующие права и несет ответственность за качество и своевременность выполнения возложенных на него обязанностей.
-8.		
-';
+        $subject = implode(' ', $data);
+        //dump($subject);
         $subject = preg_replace('|\s+|', ' ', str_replace("\n", " ", $subject));
         $subject = str_replace(['(', ')', ';'], '', $subject);
 
@@ -108,7 +102,7 @@ class IndexController extends AbstractController
     public function index(Request $request)
     {
         /** @var NewText1 $doljnost */
-        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(5);
+        $doljnost = $this->getDoctrine()->getRepository(NewText1::class)->find(237);
         $dolPol = $this->getDoctrine()->getRepository(InstructionContent::class)->findBy([
             'instruction' => $doljnost->getIntstr(),
             'section' => $doljnost->getSection()
@@ -130,7 +124,7 @@ class IndexController extends AbstractController
         return $this->render('index.html.twig', [
             'doljnost' => $doljnost->getText(),
             'dolPol' => $dolPol,
-            'boss' => $this->getBoss(),
+            //'boss' => $this->getBoss(5),
         ]);
     }
 

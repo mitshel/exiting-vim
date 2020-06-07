@@ -9557,7 +9557,8 @@ a.text-primary:focus, a.text-primary:hover {
 }
 
 .text-secondary {
-    color: #2c3e50 !important
+    color: #2c3e50 !important;
+    font-size: 20px;
 }
 
 a.text-secondary:focus, a.text-secondary:hover {
@@ -10116,4 +10117,9 @@ form .row:first-child .floating-label-form-group {
 .title-addition-item {
     text-align: center;
     font-size: 1.5rem;
+}
+
+.title-item {
+    text-align: center;
+    color: #6c757d;
 }

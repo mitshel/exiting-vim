@@ -7,13 +7,30 @@
     <!-- Переопределенные шрифты бутстрапа-->
     <link rel="stylesheet" href="{{ asset('css/heading.css') }}">
     <link rel="stylesheet" href="{{ asset('css/body.css') }}">
+    <style>
+        #dropdownAcc {
+            background: none;
+            color: #4e5f68;
+            text-align: left;
+            font-weight: 700;
+        }
+        #dropdownAcc:active, #dropdownAcc:focus {
+            border: none;
+            background: none;
+            outline: none;
+            color: #135d82;
+            background: #fff;
+            border-radius: 0px !important;
+        }
+
+    </style>
 {% endblock %}
 {% block title %}Hello IndexController!{% endblock %}
 
 {% block body %}
-    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-xl bg-secondary fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">
+            <a class="navbar-brand js-scroll-trigger" href="{{ path('home') }}">
             <img alt="Brand" src="{{ asset('img/logo.png') }}" height="45px"> Quick Dive</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                     type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -33,6 +50,18 @@
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                                                          href="#addition">ДОПОЛНИТЕЛЬНЫЯ ИНФОРМАЦИЯ</a>
                     </li>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item mx-0 mx-lg-1 dropdown">
+                            <button class="w-100 nav-link py-3 px-0 px-lg-3 rounded border-0" id="dropdownAcc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span class="ml-3 d-xl-none">АККАУНТ</span></button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownAcc">
+                                <a class="dropdown-item" href="{{ path('logout') }}">Выйти</a>
+                            </div>
+                        </li>
+                    {% else %}
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ path('login') }}" ><i class="fa fa-user"></i><span class="ml-3 d-xl-none">ВОЙТИ</span></a>
+                            </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -40,11 +69,10 @@
     <header class="masthead bg-primary text-white text-center background" style="background-image: url({{ asset('img/rosback8.jpg') }})">
         <div class="container d-flex align-items-center flex-column backtext">
             <h1 class="masthead-heading mb-0">ИНЖЕНЕР-ПРОГРАММИСТ</h1>
-
-            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Отдел разработки и внедрения информационных систем</p>
+            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Краткая должностная инструкция</p>
         </div>
     </header>
-    {% if boss is defined %}
+    {% if boss is defined and boss is not null%}
         <section class="page-section">
             <div class="container">
                 <div class="row justify-content-center">
@@ -121,7 +149,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-4 col-lg-4 mb-4">
                     <div class="addition-item"  data-toggle="modal" data-target="#modalAdditianalItem1">
-                        <h2 class="title-addition-item">Должностная инструкция товаровед</h2>
+                        <h2 class="title-addition-item">Должностная инструкция главного программиста</h2>
                     </div>
                 </div>
 
@@ -134,7 +162,7 @@
                                     <div class="row justify-content-center">
                                         <div class="col-12">
                                             <!-- Portfolio Modal - Title-->
-                                            <h2 class="portfolio-modal-title text-secondary mb-0">Товаровед</h2>
+                                            <h2 class="portfolio-modal-title text-secondary mb-0">Главный программист</h2>
                                             <!-- Icon Divider-->
                                             <div class="divider-custom">
                                                 <div class="divider-custom-line"></div>
@@ -176,12 +204,112 @@
 
                 <div class="col-md-4 col-lg-4 mb-4">
                     <div class="addition-item">
-                        <h2 class="title-addition-item">Должностная инструкция товаровед</h2>
+                        <div class="addition-item"  data-toggle="modal" data-target="#modalAdditianalItem2">
+                        <h2 class="title-addition-item">Должностная инструкция WEB-Мастера</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-modal modal fade" id="modalAdditianalItem2" tabindex="-1" role="dialog" aria-labelledby="#modalAdditianalItem2Label" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
+                            <div class="modal-body text-center">
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-12">
+                                            <!-- Portfolio Modal - Title-->
+                                            <h2 class="portfolio-modal-title text-secondary mb-0">WEB-Мастер</h2>
+                                            <!-- Icon Divider-->
+                                            <div class="divider-custom">
+                                                <div class="divider-custom-line"></div>
+                                            </div>
+
+                                            <h3 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Должностные обязанности<hr></h3>
+                                            <div class="" style="text-align: left; font-size: 1.2rem">
+                                                <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
+                                                <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
+                                                <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
+                                                <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
+                                                <p>Определяет возможность использования готовых программных продуктов.</p>
+                                            </div>
+
+                                            <h3 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Права<hr></h3>
+                                            <div class="" style="text-align: left; font-size: 1.2rem">
+                                                <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
+                                                <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
+                                                <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
+                                                <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
+                                                <p>Определяет возможность использования готовых программных продуктов.</p>
+                                            </div>
+
+                                            <h3 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Ответственность<hr></h3>
+                                            <div class="" style="text-align: left; font-size: 1.2rem">
+                                                <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
+                                                <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
+                                                <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
+                                                <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
+                                                <p>Определяет возможность использования готовых программных продуктов.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-4 mb-4">
                     <div class="addition-item">
-                        <h2 class="title-addition-item">Должностная инструкция товаровед</h2>
+                        <div class="addition-item"  data-toggle="modal" data-target="#modalAdditianalItem3">
+                        <h2 class="title-addition-item">Должностная инструкция IT-Менеджера</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-modal modal fade" id="modalAdditianalItem3" tabindex="-1" role="dialog" aria-labelledby="#modalAdditianalItem3Label" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
+                            <div class="modal-body text-center">
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-12">
+                                            <!-- Portfolio Modal - Title-->
+                                            <h2 class="portfolio-modal-title text-secondary mb-0">IT-Менеджер</h2>
+                                            <!-- Icon Divider-->
+                                            <div class="divider-custom">
+                                                <div class="divider-custom-line"></div>
+                                            </div>
+
+                                            <h3 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Должностные обязанности<hr></h3>
+                                            <div class="" style="text-align: left; font-size: 1.2rem">
+                                                <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
+                                                <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
+                                                <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
+                                                <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
+                                                <p>Определяет возможность использования готовых программных продуктов.</p>
+                                            </div>
+
+                                            <h3 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Права<hr></h3>
+                                            <div class="" style="text-align: left; font-size: 1.2rem">
+                                                <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
+                                                <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
+                                                <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
+                                                <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
+                                                <p>Определяет возможность использования готовых программных продуктов.</p>
+                                            </div>
+
+                                            <h3 class="page-section-heading text-secondary mb-0 d-inline-block text-center">Ответственность<hr></h3>
+                                            <div class="" style="text-align: left; font-size: 1.2rem">
+                                                <p>Разрабатывать программы, проводить их тестирование и отладку.</p>
+                                                <p>Разрабатывать технологию решения задачи, осуществлять выбор языка программирования.</p>
+                                                <p>Определять информацию, ее объемы, структуру, макеты и схемы ввода, обработки, хранения и вывода, методы ее контроля.</p>
+                                                <p>Разрабатывает инструкции по работе с программами, оформляет необходимую техническую документацию.</p>
+                                                <p>Определяет возможность использования готовых программных продуктов.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
