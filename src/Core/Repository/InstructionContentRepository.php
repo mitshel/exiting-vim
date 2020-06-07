@@ -26,7 +26,8 @@ class InstructionContentRepository extends ServiceEntityRepository
             ->where('s.id = :section')
             ->andWhere('ii.id = :id')
             ->setParameter('section', $section)
-            ->setParameter('id', $post);
+            ->setParameter('id', $post)
+            ->orderBy('item.id', 'ASC');
 
         return $query->getQuery()->getArrayResult();
     }

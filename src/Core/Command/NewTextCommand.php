@@ -36,33 +36,81 @@ class NewTextCommand extends Command
             '',
         ]);
 
-        $items = $this->em->getRepository(Instruction::class)->findAll();
-        $arr = [1, 2, 3, 4];
-        /** @var Instruction $item */
-        foreach ($items as $item) {
-            foreach ($arr as $i) {
-                $section = $this->em->getRepository(Section::class)->find($i);
-                $str = $this->str($item->getId(), $i);
-                $newtext = new NewText1();
-                $newtext->setSection($section);
-                $newtext->setIntstr($item);
-                $newtext->setText($str);
-                $this->em->persist($newtext);
-                $this->em->flush();
-            }
-        }
+        $instructions = $this->em->getRepository(Instruction::class)->findAll();
 
+        /** @var Section $obyazSection */
+        $obyazSection = $this->em->getRepository(Section::class)->find(2);
+        /** @var Section $obyazSection */
+        $pravaSection = $this->em->getRepository(Section::class)->find(3);
+        /** @var Section $obyazSection */
+        $otvetSection = $this->em->getRepository(Section::class)->find(4);
+
+
+        foreach ($instructions as $instruction) {
+            $inst = $this->em->getRepository(InstructionContent::class)->findBy([
+                'instruction' => $instruction,
+                'section' => $obyazSection,
+            ], ['id' => 'asc']);
+
+            $obyaz = [];
+            /** @var InstructionContent $item */
+            foreach ($inst as $i) {
+                $obyaz[] = $i->getItem()->getName();
+            }
+            $strObyaz = $this->str(implode('. ', $obyaz));
+
+            $newtext = new NewText1();
+            $newtext->setSection($obyazSection);
+            $newtext->setIntstr($instruction);
+            $newtext->setText($strObyaz);
+            $this->em->persist($newtext);
+            $this->em->flush();
+
+
+            $inst = $this->em->getRepository(InstructionContent::class)->findBy([
+                'instruction' => $instruction,
+                'section' => $pravaSection,
+            ], ['id' => 'asc']);
+
+            $prava = [];
+            /** @var InstructionContent $item */
+            foreach ($inst as $item) {
+                $prava[] = $item->getItem()->getName();
+            }
+            $strObyaz = $this->str(implode('. ', $prava));
+
+            $newtext = new NewText1();
+            $newtext->setSection($pravaSection);
+            $newtext->setIntstr($instruction);
+            $newtext->setText($strObyaz);
+            $this->em->persist($newtext);
+            $this->em->flush();
+
+
+            $inst = $this->em->getRepository(InstructionContent::class)->findBy([
+                'instruction' => $instruction,
+                'section' => $otvetSection,
+            ], ['id' => 'asc']);
+
+            $otvet = [];
+            /** @var InstructionContent $item */
+            foreach ($inst as $item) {
+                $otvet[] = $item->getItem()->getName();
+            }
+
+            $strOtvet = $this->str(implode('. ', $otvet));
+            $newtext = new NewText1();
+            $newtext->setSection($otvetSection);
+            $newtext->setIntstr($instruction);
+            $newtext->setText($strOtvet);
+            $this->em->persist($newtext);
+            $this->em->flush();
+        }
         return 0;
     }
 
-    private function str($idInstruction, $idSection)
+    private function str($str)
     {
-        $items = $this->em->getRepository(InstructionContent::class)->findArr($idInstruction, $idSection);
-
-        $arr = array_column($items, 'name');
-
-        $str = implode(' ', $arr);
-
         $str = $this->regex($str);
 
         $keywords = preg_split("/[\s,]+/", $str);
