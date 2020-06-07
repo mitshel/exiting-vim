@@ -81,9 +81,9 @@ class ArchiveController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="spec")
+     * @Route("/{id}/show",  name="spec")
      */
-    public function indexSpec($id)
+    public function indexSpec(int $id)
     {
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository(Post::class)->find($id);

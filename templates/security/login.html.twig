@@ -1,25 +1,123 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Переопределенное ядро бутсрапа-->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    <!-- Переопределенные шрифты бутстрапа-->
+    <link rel="stylesheet" href="{{ asset('css/heading.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/body.css') }}">
+    <style>
+        #login {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+        @media (min-width: 992px) {
+            form {
+                font-size: 1.2rem;
+            }
+        }
+
+        [type=submit] {
+            background: #2c3e50;
+            border-color: #2c3e50;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}Авторизация{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="{{ path('home') }}">
+                <img alt="Brand" src="{{ asset('img/logo.png') }}" height="45px"> Quick Dive</a>
+            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
+                    type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Меню <i
+                        class="fas fa-bars"></i></button>
+{#            <div class="collapse navbar-collapse" id="navbarResponsive">#}
+{#                <ul class="navbar-nav ml-auto">#}
+{#                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"#}
+{#                                                         href="#im">ОБЯЗАННОСТИ</a>#}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputUsername" class="sr-only">Username</label>
-        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+{#                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"#}
+{#                                                         href="#law">ПРАВА</a>#}
 
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
+{#                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"#}
+{#                                                         href="#liability">ОТВЕТСТВЕННОСТЬ</a>#}
+{#                    </li>#}
+{#                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"#}
+{#                                                         href="#addition">ДОПОЛНИТЕЛЬНЫЯ ИНФОРМАЦИЯ</a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            </div>#}
+        </div>
+    </nav>
+    <header class="masthead bg-primary text-white text-center background" style="background-image: url({{ asset('img/rosback8.jpg') }})">
+        <div class="container d-flex align-items-center flex-column backtext">
+            <h1 class="masthead-heading mb-0">Авторизация</h1>
 
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
+            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Для доступа к вашей должностной инструкции пройдите авторизируйтесь на портале</p>
+        </div>
+    </header>
+
+    <section class="page-section" id="login">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-6 col-12">
+                    <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <label for="inputUsername">Имя пользователя</label>
+                            <input type="text" name="username"  class="form-control" id="inputUsername" placeholder="Введите имя пользователя..." value="{{ last_username }}" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Пароль</label>
+                            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Введите пароль..." required>
+                        </div>
+
+
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary mb-2 w-100 bg-primary">Войти</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <!-- Footer Location-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4">РАЗРАБОТКА</h4>
+                    <p class="pre-wrap lead mb-0">2020 Exiting VIM г. Красноярск</p>
+
+                </div>
+                <!-- Footer Social Icons-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4"><a style="color: #fff; text-decoration: none" href="{{ path('archive_index') }}">БАЗА ПОЛНЫХ ИНСТРУКЦИЙ</a></h4>
+                </div>
+                <!-- Footer About Text-->
+                <div class="col-lg-4">
+                    <h4 class="mb-4">О ПРОДУКТЕ</h4>
+                    <p class="pre-wrap lead mb-0">Интеллектуальная система для автоматической генерации одностраничных инструкций</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+{% block subjavascripts %}
+    {{ parent() }}
+    <script src="{{ asset('lib/fontawesome-free-5.5.0-web/js/all.min.js') }}"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
 {% endblock %}
