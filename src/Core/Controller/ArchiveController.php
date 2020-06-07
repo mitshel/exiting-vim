@@ -4,6 +4,7 @@ namespace Core\Controller;
 
 use Core\Entity\Instruction;
 use Core\Entity\InstructionContent;
+use Core\Entity\NewText1;
 use Core\Entity\Post;
 use Core\Entity\Section;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -142,6 +143,20 @@ class ArchiveController extends AbstractController
         foreach ($inst as $item) {
             $data['otvet'][] = $item->getItem()->getName();
         }
+
+        $obyazKor = $this->getDoctrine()->getRepository(NewText1::class)->findOneBy([
+            'intstr' => $instruction,
+            'section' => $obyazSection
+        ]);
+        $data['obyazKor'] = $obyazKor->getText();
+
+        $pravaKor = $this->getDoctrine()->getRepository(NewText1::class)->findOneBy([
+            'intstr' => $instruction,
+            'section' => $pravaSection
+        ]);
+        $data['pravaKor'] = $obyazKor->getText();
+
+        $data['otvetKor'] = implode('. ', $data['otvet']);
 
         return $this->render('spec.html.twig', $data);
     }
