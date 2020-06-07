@@ -129,16 +129,6 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="spec")
-     */
-    public function indexSpec($id)
-    {
-        return $this->render('spec.html.twig', [
-            'controller_name' => 'IndexController'
-        ]);
-    }
-
-    /**
      * @Route("/fix", name="fix")
      * @Route("/fix/{id}", name="fix_page")
      */

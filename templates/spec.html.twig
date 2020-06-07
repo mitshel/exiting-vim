@@ -7,6 +7,23 @@
     <!-- Переопределенные шрифты бутстрапа-->
     <link rel="stylesheet" href="{{ asset('css/heading.css') }}">
     <link rel="stylesheet" href="{{ asset('css/body.css') }}">
+    <style>
+        #dropdownAcc {
+            background: none;
+            color: #4e5f68;
+            text-align: left;
+            font-weight: 700;
+        }
+        #dropdownAcc:active, #dropdownAcc:focus {
+            border: none;
+            background: none;
+            outline: none;
+            color: #135d82;
+            background: #fff;
+            border-radius: 0px !important;
+        }
+
+    </style>
 {% endblock %}
 {% block title %}{{ post.name }}{% endblock %}
 
@@ -33,13 +50,27 @@
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                                                          href="{{ path('archive_index')}}">{% apply upper %}База полных инструкций{% endapply %}</a>
                     </li>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item mx-0 mx-lg-1 dropdown">
+                            <button class="w-100 nav-link py-3 px-0 px-lg-3 rounded border-0" id="dropdownAcc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span class="ml-3 d-xl-none">АККАУНТ</span></button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownAcc">
+                                <a class="dropdown-item" href="{{ path('home') }}">Моя инструкция</a>
+                                <a class="dropdown-item" href="{{ path('logout') }}">Выйти</a>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ path('login') }}" ><i class="fa fa-user"></i><span class="ml-3 d-xl-none">ВОЙТИ</span></a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
-    <header class="masthead bg-primary text-white text-center background" style="background-image: url({{ asset('img/rosback8.jpg') }})">
+    <header class="masthead bg-primary text-white text-center background" style="background-image: url({{ asset('img/rosback9.jpg') }})">
         <div class="container d-flex align-items-center flex-column backtext">
             <h1 class="masthead-heading mb-0">{{ post.name }}</h1>
+            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Полный текст должностной инструкции</p>
             <!-- Icon Divider-->
             {#<div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
